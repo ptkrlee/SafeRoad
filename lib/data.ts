@@ -6,6 +6,6 @@ export async function publicData(): Promise<{sessions:Session[];settings:Setting
     const db=await database();
     const [s,c]=await Promise.all([db.rpc('session_list'),db.from('settings').select('*').eq('id',1).single()]);
     if(s.error || c.error) throw new Error('Configuration unavailable');
-    return { sessions:s.data,settings:c.data,connected:true,error:false };
+    return { sessions:(s.data as Session[]).map(session=>({...session,start_time:session.start_time||initialSessions.find(confirmed=>confirmed.date===session.date)?.start_time||null})),settings:c.data,connected:true,error:false };
   } catch { return {sessions:initialSessions,settings:initialSettings,connected:false,error:true}; }
 }
