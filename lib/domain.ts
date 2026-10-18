@@ -12,10 +12,10 @@ export type Session = { id: string; date: string; start_time: string | null; cou
 export type Settings = { bank: string; account: string; holder: string; fee: number; privacy_text: string; refund_text: string; published: boolean; version: number };
 export const initialSettings: Settings = { bank: '농협', account: '301-0365-1653-61', holder: '부산치유협회', fee: 10000, privacy_text: '', refund_text: '', published: false, version: 1 };
 export const initialSessions: Session[] = [
-  { id:'00000000-0000-4000-8000-000000000001', date:'2026-10-23', notice_date:'2026-10-22' },
-  { id:'00000000-0000-4000-8000-000000000002', date:'2026-11-14', notice_date:'2026-11-13' },
-  { id:'00000000-0000-4000-8000-000000000003', date:'2026-11-21', notice_date:'2026-11-20' },
-].map(s => ({ ...s, start_time:null, course:null, capacity:30, minimum:10, accepting:false, cancelled:false, booked:0 }));
+  { id:'00000000-0000-4000-8000-000000000001', date:'2026-10-23', notice_date:'2026-10-22', course:'해파랑길 1코스 · 왕복 4km' },
+  { id:'00000000-0000-4000-8000-000000000002', date:'2026-11-14', notice_date:'2026-11-13', course:'남파랑길 1코스 · 왕복 6km' },
+  { id:'00000000-0000-4000-8000-000000000003', date:'2026-11-21', notice_date:'2026-11-20', course:'해파랑길 1코스 · 왕복 4km' },
+].map(s => ({ ...s, start_time:'09:30:00', capacity:30, minimum:10, accepting:false, cancelled:false, booked:0 }));
 export function formatDate(value:string) { return new Intl.DateTimeFormat('ko-KR', { timeZone:'Asia/Seoul', month:'long', day:'numeric', weekday:'short' }).format(new Date(value+'T12:00:00+09:00')); }
 export function koreaToday() { return new Intl.DateTimeFormat('en-CA', { timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit' }).format(new Date()); }
 export function canApply(s:Session, settings:Settings, today=koreaToday()) { return settings.published && s.accepting && !s.cancelled && s.date >= today && s.booked < s.capacity; }
