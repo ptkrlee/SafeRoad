@@ -19,7 +19,7 @@ test('공개 갤러리: 기존 비공개 동의 보존·관리자 업로드·공
    insert into public.applications(original_session_id,session_id,name,address,phone,people,depositor,total,policy_version,privacy_snapshot,refund_snapshot,photo_consent,photo_policy_snapshot)
    select '${SID}','${SID}','기존범위동의가상','부산 남구','01000000001',1,'가상입금자',10000,version,privacy_text,refund_text,true,photo_text from public.settings where id=1;`);
   const old=(await db.query<any>('select photo_policy_snapshot from public.applications')).rows[0].photo_policy_snapshot;
-  const migration=await readFile(new URL('../supabase/04-public-gallery.sql',import.meta.url),'utf8');await db.exec(migration);const viewOnlyMigration=await readFile(new URL('../supabase/05-public-gallery-view-only.sql',import.meta.url),'utf8');await db.exec(viewOnlyMigration);
+  const migration=await readFile(new URL('../supabase/04-public-gallery.sql',import.meta.url),'utf8');await db.exec(migration);const viewOnlyMigration=await readFile(new URL('../supabase/05-public-gallery-view-only.sql',import.meta.url),'utf8');await db.exec(viewOnlyMigration);const historyMigration=await readFile(new URL('../supabase/06-completed-sessions.sql',import.meta.url),'utf8');await db.exec(historyMigration);
   async function role(user:string|null){await db.exec('reset role');await db.query("select set_config('request.jwt.claim.sub',$1,false)",[user||'']);await db.exec(user?'set role authenticated':'set role anon');}
   async function rpc(name:string,payload:object){return(await db.query<{result:any}>(`select public.${name}($1::jsonb) as result`,[JSON.stringify(payload)])).rows[0].result;}
   let photo:{id:string;object_path:string;preview_path:string};

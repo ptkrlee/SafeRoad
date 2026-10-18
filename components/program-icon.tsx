@@ -7,8 +7,8 @@ const shapes:Record<ProgramIconName,React.ReactNode>={
  tape:<><path d="m4 14 10-10a3 3 0 0 1 4 0l2 2a3 3 0 0 1 0 4L10 20a3 3 0 0 1-4 0l-2-2a3 3 0 0 1 0-4Z"/><path d="m9 10 5 5m-3-7 5 5M7 15h.01M9 17h.01M16 7h.01M18 9h.01"/></>,
  stretch:<><circle cx="12" cy="4" r="2"/><path d="M12 7v7M4 7l8 3 8-3M12 14l-6 7m6-7 6 7"/></>,
  walk:<><circle cx="14" cy="4" r="2"/><path d="m10 10 3-3 3 5 4 1M5 12l4-1 2-3m1 5-3 8m3-8 4 3 1 5"/></>,
- rest:<><path d="M4 9h13v7a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9Zm13 1h2a3 3 0 0 1 0 6h-2M7 3v3m4-3v3m4-3v3"/></>,
- recover:<><path d="M20 12c-1 5-8 9-8 9S4 17 4 11a4 4 0 0 1 8-2 4 4 0 0 1 8 0M2 13h5l2-3 3 6 2-3h8"/></>,
+ rest:<><path d="M8 6 10 3h4l2 3h5v15H3V6h5Z"/><circle cx="12" cy="13" r="4"/><path d="M18 9h.01"/></>,
+ recover:<><path d="M4 5h9l4 3v5H4V5Zm13 3h3v5h-3M8 13l-1 8h6l1-8M20 6v9M3 8H1m2 3H1"/></>,
  route:<><circle cx="5" cy="5" r="2"/><circle cx="19" cy="19" r="2"/><path d="M7 5h9a4 4 0 0 1 0 8H8a3 3 0 0 0 0 6h9"/></>
 };
 export default function ProgramIcon({name}:{name:ProgramIconName}){return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">{shapes[name]}</svg>;}

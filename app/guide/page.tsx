@@ -1,12 +1,4 @@
-import Link from 'next/link';
+import ReadableText from '@/components/readable-text';
 import ProgramGuide from '@/components/program-guide';
 export const metadata={title:'프로그램·참가 안내 | 오륙도 안전걷기로드'};
-export default function Guide(){return <main><section className="section guide-heading"><p className="eyebrow">YOUR GUIDE TO A SAFER WALK</p><h1>알고 걸으면,<br/>더 편안한 오륙도.</h1><p>프로그램 구성부터 코스, 준비물과 참여 전 확인할 내용까지 안내합니다.</p><a className="button" href="/#apply">일정 확인·체험 신청 ↗</a></section><ProgramGuide/><section className="section guide-faq"><h2>참가 전 자주 확인하는 내용</h2>{[
- ['걷기는 얼마나 오래 하나요?','두 코스의 걷기 시간은 약 2시간입니다. 사전교육과 테이핑, 준비운동, 걷기 후 회복 활동은 별도입니다. 오전 9시 30분 집결, 낮 12시 30분~오후 1시경 종료 예정이며 개인 속도와 현장 상황에 따라 달라질 수 있습니다.'],
- ['짧은 코스가 더 쉬운가요?','해파랑길은 왕복 4km이지만 계단과 경사가 있어 매뉴얼 기준 난이도 중~상입니다. 남파랑길은 왕복 6km, 난이도 중입니다. 본인의 걷기 경험과 몸 상태를 고려해주세요.'],
- ['테이핑은 모두 해야 하나요?','피부가 예민하거나 테이프·밴드에 알레르기 반응이 있었던 분, 피부 상처 등이 있는 분은 먼저 진행자에게 알려주세요. 현장 안내에 따라 체험 여부를 조정하고, 사용 중 불편하면 바로 말씀해주세요.'],
- ['현장에서 어떤 물품을 사용하나요?','물과 테이프 등을 현장에서 준비하며, 자가회복 활동에는 회복 도구를 사용합니다. 지급·대여 물품과 기념품의 최종 구성은 회차별 안내를 따릅니다. 개인 가방은 직접 준비해주세요.'],
- ['비가 오면 어떻게 되나요?','우천 등 기상 악화나 인원 미달로 취소될 수 있습니다. 체험 전 금요일을 기준으로 진행 여부를 공지하며 10월 23일은 별도 안내일을 적용합니다. 주최 측 취소는 수수료 공제 없이 전액 환불합니다.'],
- ['취소와 환불은 어떻게 신청하나요?','체험 3일 전 밤 11시 59분(한국시간)까지 010-9679-9817로 취소 문자를 보내주세요. 참가자 사정의 취소는 이체수수료 500원 공제, 농협 계좌는 수수료 없이 환불합니다. 마감 후 환불 가능 여부는 사무국으로 문의해주세요.'],
- ['사진 촬영에 동의하지 않아도 참여할 수 있나요?','네. 사진 촬영과 게시 동의는 선택사항이며, 동의하지 않아도 신청·참여할 수 있습니다. 공식 공개 게시와 완보자 갤러리 공유는 구분해 안내합니다. 동의는 신청자 본인에게만 적용되므로 일행의 동의는 별도로 확인합니다.'],
- ].map(([title,body])=><details key={title}><summary>{title}</summary><p>{body}</p></details>)}<p className="muted">2026 오륙도 안전걷기로드 운영 매뉴얼을 바탕으로 참가자에게 필요한 내용을 정리했습니다. 최신 회차 공지와 현장 안내를 함께 확인해주세요.</p><Link href="/#apply" className="button">나에게 맞는 회차 선택하기 ↗</Link></section></main>}
+export default function Guide(){return <main><section className="section guide-heading"><p className="eyebrow">YOUR GUIDE TO A SAFER WALK</p><h1>알고 걸으면,<br/>더 편안한 오륙도.</h1><p><ReadableText text={'프로그램 구성부터 코스, 준비물과 참여 전 확인할 내용까지 안내합니다.'}/></p><a className="button" href="/#apply">일정 확인·체험 신청 ↗</a></section><ProgramGuide/></main>}

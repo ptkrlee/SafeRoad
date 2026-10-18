@@ -11,5 +11,5 @@ export async function POST(request:Request) {
  try { const db=await database();const settings=await db.from('settings').select('consent_revision').eq('id',1).single();if(settings.error||settings.data?.consent_revision!==4)return NextResponse.json({error:'신청 안내 업데이트 중입니다. 잠시 후 다시 확인해주세요.'},{status:503});const {data,error}=await db.rpc('submit_application',{payload:{...parsed.data,policyVersion:raw.policyVersion}});
  if(error) return NextResponse.json({error:'접수가 마감되었거나 정원·안내 정책이 변경되었습니다. 새로고침 후 다시 확인해주세요.'},{status:409});
  return NextResponse.json(data,{status:201,headers:{'Cache-Control':'no-store'}});
- } catch {return NextResponse.json({error:'접수 결과를 확인하지 못했습니다. 중복 신청 전에 사무국에 문의해주세요.'},{status:503});}
+ } catch {return NextResponse.json({error:'접수 결과를 확인하지 못했습니다. 중복 신청 전에 사무국(010-9679-9817, 문자 연락)에 문의해주세요.'},{status:503});}
 }
