@@ -5,6 +5,14 @@ Next.js + Supabase, GitHub 저장 및 Vercel 배포를 기준으로 구성했습
 
 **현재 상태:** 화면과 관리 로직 구현 및 로컬 검증 완료. 실제 Supabase 연결, 관리자 계정, 최종 정책·시작 시간·코스 설정, 실제 서비스 연결 검증과 Vercel 배포는 아직입니다. 환경변수가 없을 때 홈페이지는 준비 화면으로 동작하며 신청을 접수하지 않습니다.
 
+## 화면 초안
+
+GitHub에서 이미지 파일을 직접 열어 확인할 수 있습니다. 공개 배포 주소가 아닌 첫 개발 버전의 스크린샷입니다.
+
+- [컴퓨터 첫 화면](docs/preview-desktop.png)
+- [모바일 첫 화면](docs/preview-mobile.png)
+- [모바일 신청 화면](docs/preview-mobile-form.png)
+
 ## 개발
 
 Node.js 24에서 검증했습니다. 기존 `/workspace/SafeRoad` 체크아웃을 사용합니다.
@@ -45,7 +53,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=프로젝트-공개-anon-key
 
 ## GitHub와 Vercel
 
-코드 push 및 외부 배포는 아직 하지 않았습니다.
+초기 코드는 GitHub main 브랜치에 저장했습니다. Vercel 배포와 실제 Supabase 연결은 아직입니다.
 
 1. 이 코드와 lockfile을 GitHub `ptkrlee/SafeRoad`에 저장합니다. 기존 저장소는 최초 확인 당시 커밋이 없는 상태였습니다. 기존 파일·원격 상태를 다시 확인하고 저장해야 합니다.
 2. Vercel에서 해당 저장소를 Import합니다. Framework는 Next.js, 프로젝트 루트는 이 `package.json`이 있는 디렉터리, Node.js는 24를 선택합니다.
