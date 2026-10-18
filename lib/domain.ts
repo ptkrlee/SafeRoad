@@ -6,7 +6,7 @@ export const applicationSchema = z.object({
   people: z.coerce.number().int().min(1).max(30),
   depositor: z.string().trim().min(2, '입금자명을 입력해주세요.').max(50),
   feeConsent: z.literal(true), refundConsent: z.literal(true), privacyConsent: z.literal(true),
-  website: z.string().max(0).default(''), photoConsent:z.boolean(),
+  website: z.string().max(0).default(''), photoConsent:z.boolean(),privatePhotoConsent:z.boolean(), formRevision:z.literal(4),
 });
 export type Session = { id: string; date: string; start_time: string | null; course: string | null; capacity: number; minimum: number; accepting: boolean; cancelled: boolean; notice_date: string | null; booked: number };
 export type Settings = { bank: string; account: string; holder: string; fee: number; privacy_text: string; refund_text: string; published: boolean; version: number; photo_text?:string; consent_revision?:number };

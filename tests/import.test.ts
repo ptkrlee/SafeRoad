@@ -19,6 +19,6 @@ test('3일 전 날짜 계산은 월·연도를 넘어도 한국 달력 날짜를
  assert.equal(refundDeadline('2026-11-14'),'2026-11-11');assert.equal(refundDeadline('2026-11-21'),'2026-11-18');assert.equal(refundDeadline('2026-10-23'),'2026-10-20');assert.equal(refundDeadline('2027-01-02'),'2026-12-30');
 });
 test('사진 비동의는 허용하고 응답 필드 없는 구버전 신청은 거부한다',()=>{
- const valid={sessionId:'00000000-0000-4000-8000-000000000001',name:'가상참가자',address:'부산 남구',phone:'01000000000',people:1,depositor:'가상입금자',feeConsent:true,refundConsent:true,privacyConsent:true,photoConsent:false};
+ const valid={sessionId:'00000000-0000-4000-8000-000000000001',name:'가상참가자',address:'부산 남구',phone:'01000000000',people:1,depositor:'가상입금자',feeConsent:true,refundConsent:true,privacyConsent:true,photoConsent:false,privatePhotoConsent:false,formRevision:4};
  assert.equal(applicationSchema.safeParse({...valid,photoConsent:undefined}).success,false);assert.equal(applicationSchema.parse({...valid,photoConsent:false}).photoConsent,false);assert.equal(applicationSchema.parse({...valid,photoConsent:true}).photoConsent,true);assert.equal(applicationSchema.safeParse({...valid,photoConsent:'true'}).success,false);
 });

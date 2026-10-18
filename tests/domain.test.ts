@@ -12,7 +12,7 @@ test('연결 전·정책 미승인·마감·운영 취소·정원 초과·지난
  for(const patch of [{accepting:false},{cancelled:true},{booked:30},{date:'2026-10-17'}]) assert.equal(canApply({...session,...patch},settings,'2026-10-18'),false);
 });
 test('일행 포함 인원·연락처·동의와 봇 필드를 검증한다',()=>{
- const input={sessionId:initialSessions[0].id,name:'가상참가자',address:'부산 남구',phone:'010-1234-5678',people:'2',depositor:'가상입금자',feeConsent:true,refundConsent:true,privacyConsent:true,website:'',photoConsent:false};
+ const input={sessionId:initialSessions[0].id,name:'가상참가자',address:'부산 남구',phone:'010-1234-5678',people:'2',depositor:'가상입금자',feeConsent:true,refundConsent:true,privacyConsent:true,website:'',photoConsent:false,privatePhotoConsent:false,formRevision:4};
  assert.equal(applicationSchema.parse(input).phone,'01012345678');
  assert.equal(applicationSchema.parse(input).people,2);
  for(const patch of [{people:0},{people:31},{people:1.5},{phone:'123'},{privacyConsent:false},{refundConsent:false},{website:'spam'}])assert.equal(applicationSchema.safeParse({...input,...patch}).success,false);
