@@ -17,3 +17,15 @@ export async function mutate(form:FormData) {
  }catch{error=true;}
  revalidatePath('/');revalidatePath('/admin');redirect(error?'/admin?error=save':'/admin?success=1');
 }
+
+export async function importApplications(input:unknown):Promise<{error?:string;inserted?:number;skipped?:number}>{
+ const {z}=await import('zod'); const {legacyRowSchema}=await import('@/lib/legacy-import');
+ const parsed=z.object({sessionId:z.string().uuid(),rows:z.array(legacyRowSchema).min(1).max(500)}).safeParse(input);
+ if(!parsed.success)return {error:'가져올 데이터 형식을 확인해주세요.'};
+ try{const db=await database();const {data:{user}}=await db.auth.getUser();const {data:admin}=await db.rpc('is_admin');
+ if(!user||!admin)return {error:'관리자 로그인이 필요합니다.'};
+ const {data,error}=await db.rpc('import_legacy_applications',{payload:parsed.data});
+ if(error)return {error:'가져오지 못했습니다. 회차·정원·원본 동의 내역과 추가 SQL 설치 여부를 확인해주세요. 이번 요청의 신규 등록은 반영되지 않았습니다.'};
+ revalidatePath('/');revalidatePath('/admin');return {inserted:data.inserted,skipped:data.skipped};
+ }catch{return {error:'처리 결과를 확인하지 못했습니다. 연결을 확인한 뒤 같은 파일을 다시 가져오면 기존 신청은 중복 등록하지 않습니다.'};}
+}
