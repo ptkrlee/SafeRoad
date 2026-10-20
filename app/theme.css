@@ -1,0 +1,108 @@
+/* Association palette supplied by the program office. */
+:root {
+  --forest: #102b24;
+  --green: #2e7d5b;
+  --ivory: #f5f1e6;
+  --gold: #b08d57;
+  --sunlight: #f2c14e;
+  --silver: #d4d8d5;
+  --ink: var(--forest);
+  --teal: var(--green);
+  --cream: var(--ivory);
+  --line: #ddd7c8;
+  --muted: #606c63;
+  --orange: var(--gold);
+}
+body { background: #fffefa; }
+a:focus-visible, button:focus-visible, input:focus-visible,
+summary:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline-color: var(--green);
+}
+.header { border-bottom: 1px solid var(--line); background: #fffefa; }
+.brand-title strong { color: var(--forest); }
+nav a:hover { color: var(--green); text-decoration: underline; text-decoration-color: var(--gold); }
+.hero { background: linear-gradient(115deg, #f5f1e6, #faf8f0); }
+.hero h1 { color: var(--forest); }
+.hero h1::after { content: ''; display: block; width: 58px; height: 3px; background: var(--gold); margin-top: 28px; }
+.eyebrow { color: #61724e; }
+.pill, .section-heading .pill { color: #6d562d; border-color: #c9b48c; background: #fbf5e7; }
+.button { background: var(--forest); border-color: var(--forest); box-shadow: inset 0 1px 0 #ffffff26, 0 5px 15px #102b2412; }
+.button:hover:not(:disabled) { background: var(--green); border-color: var(--green); }
+.button:disabled { background: #8c9c91; border-color: #8c9c91; box-shadow: none; }
+.small-button { border-color: #cfc4ad; background: #fffefa; }
+.small-button:hover { background: var(--ivory); }
+.landscape { background: linear-gradient(150deg, #e8eee4, #f5f1e6); }
+.sun { background: var(--sunlight); box-shadow: 0 0 0 16px #f2c14e24; }
+.sea { background: repeating-linear-gradient(175deg,transparent 0 27px,#ffffff25 28px 30px),linear-gradient(#559279,#2e7d5b); }
+.island { background: linear-gradient(110deg,#74946b 30%,#2c5b47 31% 60%,#416e52 61%); }
+.trail { background: #66805b; border-color: #d8c19a; border-right-color: #66805b; border-bottom-color: #66805b; }
+.compass { color: #4b6b50; }
+.info-card { background: #f8f6ee; border-color: var(--line); box-shadow: 0 8px 24px #102b2405; }
+.feature-icon { background: #e8ddc4; color: #785f34; }
+.program-details { border-color: #d8c9ac; }
+/* One deep forest panel gives the six-stage program a distinct rhythm. */
+.manual-story { background: var(--forest); color: var(--ivory); padding: 52px 44px; border: 1px solid #58705e; border-radius: 20px; margin-block: 16px 64px; }
+.manual-story .eyebrow { color: var(--sunlight); }
+.manual-story .section-intro, .manual-story .experience-steps p { color: #d2ddcf; }
+.manual-story .experience-steps h3 { color: var(--ivory); }
+.manual-story .experience-steps article>.experience-icon { color: var(--sunlight); background: #1e4033; border-color: #8c7951; }
+.manual-story .experience-icon small { color: var(--forest); background: var(--ivory); border-color: var(--gold); }
+.manual-story .faq-jump { display: inline-flex; align-items: center; gap: 12px; color: var(--ivory); background: transparent; border-color: var(--gold); padding: 12px 18px; text-decoration: none; }
+.manual-story .faq-jump:hover { background: #254837; }
+.course-activities>span { color: #526447; background: #f8f4e9; border-color: #dfd1b4; }
+.course-card { background: var(--ivory); border-color: #d8c8a7; border-top: 3px solid var(--gold); box-shadow: 0 8px 24px #102b2405; }
+.course-card:nth-child(2) { background: #f7f8f2; border-color: #cad6c8; border-top-color: var(--green); }
+.course-card li::before { background: #e1e8d9; color: var(--forest); }
+.before-walk .cards { align-items: stretch; }
+.before-walk .prep-card { display: flex; align-items: flex-start; gap: 16px; padding: 26px; }
+.prep-icon { display: grid; place-items: center; flex: 0 0 48px; width: 48px; height: 48px; background: #eae0c9; color: #795d2e; border: 1px solid #d6c39c; border-radius: 13px; }
+.prep-icon svg { width: 27px; height: 27px; }
+.prep-copy { flex: 1; min-width: 0; }
+.before-walk .prep-copy h3 { margin: 0 0 12px; font-size: 19px; line-height: 1.5; }
+.before-walk .prep-copy p { margin: 0; font-size: 15px; line-height: 1.9; }
+.notice { background: #f4f5ea; border-color: #c9d3bd; border-left: 3px solid var(--gold); }
+.guide-faq summary { color: var(--forest); }
+.guide-faq details[open] { border-bottom-color: var(--gold); }
+/* Green and gold mark the place to apply; required red stars remain explicit. */
+.application-section .section-heading h2 { color: var(--green); }
+.application-section .section-heading h2::after { content: ''; display: block; width: 64px; height: 3px; margin-top: 18px; background: var(--gold); }
+.session { border-color: #d8d3c4; background: #fffefa; }
+.session.selected { background: var(--forest); border-color: var(--gold); color: var(--ivory); box-shadow: 0 8px 24px #102b2412; }
+.session.selected small { color: #dce4d7; }
+.status.open { background: #e2ebdd; color: #23523c; }
+.session.selected .status.open { background: var(--sunlight); color: var(--forest); }
+.application-form { background: white; border-color: #d1c6af; border-top: 3px solid var(--gold); box-shadow: 0 12px 36px #102b2406; }
+input:not([type=checkbox]), textarea, select { border-color: #c8cfc3; }
+.fee-box, .policy { background: var(--ivory); }
+.precaution-card { border-color: #d9c9a7; box-shadow: 0 8px 20px #102b2404; }
+.precaution-visual { background: #f1e9d7; color: #8b6a36; }
+.precaution-visual>span { color: #7b6a49; }
+.precaution-copy { background: #fcfaf3; }
+.precaution-card:nth-child(2) .precaution-visual,
+.precaution-card:nth-child(3) .precaution-visual { background: #e8eee2; color: #3f704f; }
+.precaution-card:nth-child(2) .precaution-copy,
+.precaution-card:nth-child(3) .precaution-copy { background: #f6f8f0; }
+.gallery-tabs a { border-color: #d5c8ac; }
+.gallery-tabs a[aria-current=page] { background: var(--forest); border-color: var(--forest); color: var(--ivory); }
+.completed-date { background: #f3f2e8; border-color: #d6c8ab; }
+.completed-date>span { background: #e0e7d7; }
+footer { background: var(--forest); color: var(--ivory); border-top: 3px solid var(--gold); }
+footer small, .project-background, .footer-heading>span { color: #c6d2c3; }
+.footer-association { border: 1px solid #c3b18e; box-shadow: 0 1px 0 var(--silver); }
+.welcome-intro { background: var(--forest); }
+.welcome-copy>p { color: #e4cea3; }
+.welcome-copy h2 { color: var(--ivory); }
+.welcome-intro>button { border-color: #d3bf96; background: #102b2466; color: #fffaf0; }
+@media(max-width:1000px) {
+  .before-walk .cards { grid-template-columns: 1fr; }
+}
+@media(max-width:800px) {
+  .manual-story { padding: 34px 24px; margin-block: 12px 42px; border-radius: 16px; }
+  .before-walk .prep-card { gap: 16px; padding: 24px; }
+}
+@media(max-width:380px) {
+  .before-walk .prep-card { padding: 20px; gap: 12px; }
+  .prep-icon { flex-basis: 40px; width: 40px; height: 40px; border-radius: 11px; }
+  .prep-icon svg { width: 24px; height: 24px; }
+  .before-walk .prep-copy h3 { font-size: 17px; }
+}

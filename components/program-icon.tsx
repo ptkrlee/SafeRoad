@@ -1,5 +1,8 @@
-export type ProgramIconName='guide'|'nature'|'clock'|'people'|'tape'|'stretch'|'walk'|'rest'|'recover'|'route';
+export type ProgramIconName='guide'|'nature'|'clock'|'people'|'tape'|'stretch'|'walk'|'rest'|'recover'|'route'|'bag'|'health'|'message';
 const shapes:Record<ProgramIconName,React.ReactNode>={
+ bag:<><path d="M8 6V4a4 4 0 0 1 8 0v2M6 6h12l2 16H4L6 6Z"/><path d="M8 10h8v7H8v-7Z"/></>,
+ health:<><path d="M20 12c-1 5-8 9-8 9S4 17 4 11a4 4 0 0 1 8-2 4 4 0 0 1 8 0"/><path d="M12 10v6m-3-3h6"/></>,
+ message:<><path d="M21 4H3v13h5l4 4 4-4h5V4Z"/><path d="M7 8h10M7 12h7"/></>,
  guide:<><path d="M9 4h6l1 3h4v14H4V7h4l1-3Z"/><path d="m8 13 3 3 5-6M9 7h6"/></>,
  nature:<><path d="M20 4C8 3 3 10 7 16c6 5 14-1 13-12Z"/><path d="M4 21 17 8M10 15v-5m4 1h4"/></>,
  clock:<><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></>,
