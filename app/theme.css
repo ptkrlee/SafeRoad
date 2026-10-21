@@ -80,11 +80,12 @@ nav a:hover { color: var(--green); text-decoration: underline; text-decoration-c
 .application-form { background: white; border-color: #d1c6af; border-top: 3px solid var(--gold); box-shadow: 0 12px 36px #102b2406; }
 input:not([type=checkbox]), textarea, select { border-color: #c8cfc3; }
 .fee-box, .policy { background: var(--ivory); }
-/* Every safety card uses the same surface, icon treatment and type scale. */
-.precaution-card { border-radius: var(--card-radius); display: flex; flex-direction: column; background: var(--card-surface); border-color: #d9c9a7; box-shadow: 0 8px 20px #102b2404; }
-.precaution-card .precaution-visual { flex: 0 0 150px; min-height: 150px; background: var(--card-visual); color: #3f704f; }
-.precaution-visual>span { color: #6d562d; }
-.precaution-card .precaution-copy { flex: 1; padding: 26px 28px; background: var(--card-surface); }
+/* Diagonal pairs: warm champagne (1/4), soft sage (2/3). */
+.precaution-card { --safety-visual: #eee4cf; --safety-copy: #fbf8f0; --safety-accent: #876735; --safety-border: #d9c7a4; border-radius: var(--card-radius); display: flex; flex-direction: column; background: var(--safety-copy); border-color: var(--safety-border); box-shadow: 0 8px 20px #102b2404; }
+.precaution-card:nth-child(2), .precaution-card:nth-child(3) { --safety-visual: #dfe9de; --safety-copy: #f4f8f2; --safety-accent: #3d6a50; --safety-border: #bfcebe; }
+.precaution-card .precaution-visual { flex: 0 0 150px; min-height: 150px; background: radial-gradient(ellipse at 80% 0%,#ffffff66,transparent 70%),var(--safety-visual); color: var(--safety-accent); }
+.precaution-visual>span { color: var(--safety-accent); }
+.precaution-card .precaution-copy { flex: 1; padding: 26px 28px; background: var(--safety-copy); }
 .precaution-card .precaution-copy h3 { font-size: var(--card-title-size); line-height: 1.5; margin: 0 0 12px; }
 .guidelines .precaution-copy p { font-size: var(--card-body-size); line-height: 1.9; margin: 0; }
 .before-walk .prep-card, .photo-experience, .course-card, .course-card:nth-child(2) { background: var(--card-surface); border-color: #d9c9a7; border-radius: var(--card-radius); }
