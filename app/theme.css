@@ -213,9 +213,3 @@ footer small, .project-background, .footer-heading>span { color: #58685a; }
   .hero-slide { transition: none; }
   .hero-slide.is-active img { animation: none; transform: none; }
 }
-
-/* Smaller source photographs stay in a deliberate inset instead of being enlarged. */
-.hero-slide.is-detail { display: flex; align-items: center; justify-content: flex-end; padding: 65px 9%; background-size: cover; background-position: center; }
-.hero-slide.is-detail::before { content: ''; position: absolute; inset: 0; background: #102b24c7; }
-.hero-slide.is-detail img { position: relative; width: 62%; max-width: 380px; height: auto; max-height: 70%; object-fit: contain; border: 1px solid #c4ac78aa; border-radius: 12px; box-shadow: 0 20px 48px #0003; animation: none; transform: none; }
-@media(max-width:800px) { .hero-slide.is-detail { padding: 44px 24px 76px; justify-content: center; }.hero-slide.is-detail img { width: 74%; max-height: 100%; } }
