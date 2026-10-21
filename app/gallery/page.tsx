@@ -3,7 +3,7 @@ import Link from '@/components/site-link';
 import {configured,database} from '@/lib/supabase';
 import {formatDate} from '@/lib/domain';
 export const dynamic='force-dynamic';
-export const metadata={title:'체험 사진 갤러리 | 오륙도 안전걷기로드'};
+export const metadata={title:'체험 사진 갤러리 | 오륙도 안전걷기로드',description:'사단법인 부산치유협회가 운영하는 오륙도 안전걷기로드의 공식 공개 체험 사진을 만나보세요.',alternates:{canonical:'/gallery'}};
 export default async function Gallery({searchParams}:{searchParams:Promise<Record<string,string|undefined>>}){
  const params=await searchParams;const page=Math.max(0,Math.min(100000,Number.parseInt(params.page||'0',10)||0));
  const session=/^[0-9a-f-]{36}$/i.test(params.session||'')?params.session!:'';

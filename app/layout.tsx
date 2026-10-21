@@ -1,3 +1,4 @@
+import {siteUrl,siteName,siteDescription,isPreview} from '@/lib/seo';
 import ReadableText from '@/components/readable-text';
 import type { Metadata } from 'next';
 import Link from '@/components/site-link';
@@ -5,5 +6,13 @@ import WelcomeIntro from '@/components/welcome-intro';
 import {welcomePhoto} from '@/lib/branding';
 import './globals.css';
 import './theme.css';
-export const metadata: Metadata={title:'코리아둘레길 · 오륙도 안전걷기로드',description:'전문가와 함께 걷는 오륙도 안전걷기로드 체험프로그램'};
+export const metadata: Metadata={
+ metadataBase:new URL(siteUrl),
+ title:`${siteName} | 부산치유협회 · 부산 남구 걷기 체험`,
+ description:siteDescription,
+ robots:{index:!isPreview,follow:!isPreview},
+ openGraph:{type:'website',locale:'ko_KR',siteName,title:`${siteName} | 부산치유협회`,description:siteDescription,images:[{url:'/images/program/coast-overlook-original.webp',width:880,height:586,alt:'이기대에서 바라본 오륙도와 해안길'}]},
+ twitter:{card:'summary_large_image',title:siteName,description:siteDescription,images:['/images/program/coast-overlook-original.webp']},
+ verification:{google:process.env.GOOGLE_SITE_VERIFICATION,other:process.env.NAVER_SITE_VERIFICATION?{'naver-site-verification':process.env.NAVER_SITE_VERIFICATION}:undefined},
+};
 export default function Layout({children}:{children:React.ReactNode}) { return <html lang="ko" suppressHydrationWarning><head><script dangerouslySetInnerHTML={{__html:`(()=>{try{const reduced=location.pathname!=='/'||Boolean(location.hash)||matchMedia('(prefers-reduced-motion: reduce)').matches;document.documentElement.dataset.welcome=!reduced&&!sessionStorage.getItem('saferoad-welcome-seen')?'show':'skip';}catch{document.documentElement.dataset.welcome=location.pathname!=='/'||Boolean(location.hash)||matchMedia('(prefers-reduced-motion: reduce)').matches?'skip':'show';}})();`}}/></head><body>{welcomePhoto&&<WelcomeIntro src={welcomePhoto}/>}<header className="header"><Link href="/" className="brand" aria-label="부산치유협회 · 오륙도 안전걷기로드 홈"><img className="association-symbol" src="/images/busan-therapy-symbol.png" alt="사단법인 부산치유협회 심벌" width="380" height="264"/><span className="brand-title"><small>사단법인 부산치유협회</small><strong>오륙도 안전걷기로드</strong></span></Link><nav><Link href="/guide">프로그램 소개</Link><Link href="/#apply">체험 신청</Link><Link href="/gallery">사진 갤러리</Link><Link href="/admin">관리자</Link></nav></header>{children}<footer><div className="footer-heading"><strong>코리아둘레길 · 오륙도 안전걷기로드</strong><span>사업 수행·체험 운영 | 사단법인 부산치유협회</span></div><p className="project-background"><ReadableText text={'부산광역시 남구의 「코리아둘레길 오륙도 안전걷기로드 개발 및 운영용역」을 바탕으로, 오륙도와 해파랑길·남파랑길의 자연환경을 활용해 안전한 걷기문화를 확산하는 체험프로그램입니다. 사단법인 부산치유협회가 프로그램 개발, 안전걷기전문가 양성 및 체험 운영을 수행합니다.'}/></p><p>취소·문의는 <a href="sms:01096799817">010-9679-9817</a>로 문자를 남겨주세요. 순차적으로 안내해드립니다.</p><small>신청자의 개인정보는 공개되지 않으며, 권한이 있는 관리자만 확인합니다.</small><p className="copyright">© 2026 사단법인 부산치유협회. All rights reserved.</p><div className="footer-association"><img src="/images/busan-therapy-full.png" alt="사단법인 부산치유협회 · Busan Therapy Association" width="1444" height="276"/></div></footer></body></html> }
