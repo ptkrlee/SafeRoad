@@ -106,3 +106,118 @@ footer small, .project-background, .footer-heading>span { color: #c6d2c3; }
   .prep-icon svg { width: 24px; height: 24px; }
   .before-walk .prep-copy h3 { font-size: 17px; }
 }
+
+/* Photography: a quiet, editorial opening with the supplied coastal view first. */
+.hero {
+  position: relative;
+  display: block;
+  isolation: isolate;
+  min-height: 660px;
+  background: var(--forest);
+  color: var(--ivory);
+}
+.hero-copy {
+  position: relative;
+  z-index: 2;
+  width: 49%;
+  padding-top: 82px;
+  padding-bottom: 76px;
+  pointer-events: none;
+}
+.hero-copy a { pointer-events: auto; }
+.hero .eyebrow { color: #dfc896; font-size: 11px; }
+.hero .pill { color: #ead8b7; border-color: #c6ad7966; background: #102b2433; }
+.hero h1 { color: #fffaf0; font-size: clamp(38px,4.3vw,62px); line-height: 1.3; letter-spacing: -.055em; }
+.hero h1::after { background: #c6a768; width: 46px; margin-top: 26px; height: 2px; }
+.hero .intro { color: #e0e7dc; font-size: 16px; line-height: 1.9; }
+.hero .button { color: var(--forest); background: var(--ivory); border-color: #e6d6b5; box-shadow: none; }
+.hero .button:hover { color: var(--forest); background: #f4dfb2; border-color: #f4dfb2; }
+.hero-facts { color: #cad6c6; gap: 34px; }
+.hero-facts b { color: #f0d8a5; font-weight: 600; margin-top: 4px; }
+.hero-carousel { position: absolute; inset: 0 0 0 34%; overflow: hidden; z-index: 1; background: var(--forest); }
+.hero-photo-stage, .hero-slide, .hero-photo-veil { position: absolute; inset: 0; }
+.hero-slide { opacity: 0; transition: opacity 1.8s ease; pointer-events: none; }
+.hero-slide.is-active { opacity: 1; }
+.hero-slide img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.025); }
+.hero-slide.is-active img { animation: coastal-drift 12s ease-out both; }
+.hero-carousel[data-playing=false] .hero-slide img { animation-play-state: paused; }
+.hero-photo-veil { background: linear-gradient(90deg,#102b24 0%,#102b24b8 16%,#102b2426 49%,#102b2410 100%),linear-gradient(0deg,#102b24c7 0%,transparent 32%); }
+.hero-photo-caption { position: absolute; left: 35%; bottom: 33px; right: 240px; color: #fffaf0; }
+.hero-photo-caption>span { font-size: 9px; letter-spacing: .15em; color: #e3d2b0; }
+.hero-photo-caption p { font-size: 14px; line-height: 1.7; margin: 6px 0 0; }
+.hero-photo-controls { position: absolute; right: 28px; bottom: 30px; display: flex; align-items: center; gap: 7px; }
+.hero-photo-controls button { display: grid; place-items: center; width: 40px; height: 40px; padding: 0; color: #fffaf0; background: #102b2433; border: 1px solid #e5d7b66b; border-radius: 50%; font-size: 17px; }
+.hero-photo-controls button:hover { background: #102b2499; }
+.hero-photo-controls button:focus-visible { outline-color: #f2c14e; }
+.hero-photo-counter { font-size: 13px; color: #fffaf0; margin-right: 9px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.hero-photo-counter i { font-size: 11px; font-style: normal; color: #e1e5d9; margin-left: 5px; }
+@keyframes coastal-drift { from { transform: scale(1.025); } to { transform: scale(1.09); } }
+/* Consistent photo crops and copy padding give the three program moments a rhythm. */
+.experience-photo-grid { gap: 24px; }
+.photo-experience { overflow: hidden; border: 1px solid #dfd6c4; border-radius: 14px; background: #fbf9f2; box-shadow: 0 12px 28px #102b2405; }
+.experience-photo { position: relative; overflow: hidden; aspect-ratio: 4 / 3; background: #e8e8da; }
+.experience-photo::after { content: ''; position: absolute; inset: 40% 0 0; background: linear-gradient(transparent,#102b2459); pointer-events: none; }
+.experience-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.experience-photo>span { position: absolute; z-index: 1; bottom: 18px; left: 24px; color: #fffaf0; font-size: 10px; letter-spacing: .14em; }
+.experience-photo-copy { padding: 26px 26px 30px; }
+.experience-photo-copy>small { font-size: 11px; color: #81683d; letter-spacing: .035em; }
+.experience-photo-copy h3 { margin: 10px 0 13px; font-size: 22px; line-height: 1.5; }
+.experience-photo-copy p { color: var(--muted); font-size: 15px; line-height: 1.85; margin: 0; }
+/* Route photographs align to the card edge; the caption remains on a calm surface. */
+.course-card { padding: 0; overflow: hidden; }
+.course-photo { overflow: hidden; aspect-ratio: 16 / 9; background: #e7e9df; }
+.course-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.course-card-copy { padding: 30px 32px 32px; }
+.course-card-copy>p:last-child { color: var(--muted); font-size: 14px; margin: 0; }
+/* The Illustrator logo is already transparent: place it directly on the ivory footer. */
+footer { background: var(--ivory); color: var(--forest); border-top: 1px solid #c3ab7b; padding-top: 52px; padding-bottom: 44px; }
+footer small, .project-background, .footer-heading>span { color: #58685a; }
+.copyright { border-top-color: #d8cdb4; }
+.footer-association { display: block; width: fit-content; max-width: 100%; background: transparent; border: 0; border-radius: 0; box-shadow: none; padding: 0; margin-top: 28px; }
+.footer-association img { width: 315px; max-width: 100%; height: auto; }
+@media(min-width:1440px) { .hero-copy { padding-left: 108px; } }
+@media(max-width:1100px) {
+  .hero-copy { width: 54%; }
+  .hero h1 { font-size: 44px; }
+  .hero .intro { font-size: 15px; }
+  .hero-photo-caption { left: 40%; right: 220px; font-size: 13px; }
+  .experience-photo-copy { padding: 22px 20px 26px; }
+  .experience-photo-copy h3 { font-size: 20px; }
+}
+@media(max-width:800px) {
+  .hero { min-height: 0; display: flex; flex-direction: column; }
+  .hero-copy { width: 100%; padding: 46px 24px 36px; }
+  .hero h1 { font-size: clamp(36px,7.5vw,48px); margin-top: 22px; }
+  .hero .intro { font-size: 16px; }
+  .hero-carousel { position: relative; inset: auto; width: 100%; min-height: 360px; }
+  .hero-photo-veil { background: linear-gradient(180deg,#102b24 0%,#102b2410 27%,transparent 54%,#102b24c9 100%); }
+  .hero-photo-caption { left: 24px; right: 24px; bottom: 82px; }
+  .hero-photo-controls { left: 24px; right: 24px; bottom: 24px; justify-content: flex-end; }
+  .hero-photo-counter { margin-right: auto; }
+  .hero-facts { margin-top: 28px; }
+  .experience-photo-grid { grid-template-columns: 1fr; gap: 24px; }
+  .photo-experience { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); }
+  .experience-photo { aspect-ratio: auto; min-height: 235px; }
+  .experience-photo-copy { padding: 28px 24px; align-self: center; }
+  .course-card-copy { padding: 25px 24px 28px; }
+  .footer-association { padding: 0; }
+}
+@media(max-width:480px) {
+  .hero-carousel { min-height: 330px; }
+  .hero .intro { font-size: 15px; }
+  .photo-experience { display: block; }
+  .experience-photo { aspect-ratio: 4 / 3; min-height: 0; }
+  .experience-photo-copy { padding: 24px; }
+  .experience-photo-copy h3 { font-size: 21px; }
+  .course-photo { aspect-ratio: 16 / 10; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .hero-slide { transition: none; }
+  .hero-slide.is-active img { animation: none; transform: none; }
+}
+
+/* Smaller source photographs stay in a deliberate inset instead of being enlarged. */
+.hero-slide.is-detail { display: flex; align-items: center; justify-content: flex-end; padding: 65px 9%; background-size: cover; background-position: center; }
+.hero-slide.is-detail::before { content: ''; position: absolute; inset: 0; background: #102b24c7; }
+.hero-slide.is-detail img { position: relative; width: 62%; max-width: 380px; height: auto; max-height: 70%; object-fit: contain; border: 1px solid #c4ac78aa; border-radius: 12px; box-shadow: 0 20px 48px #0003; animation: none; transform: none; }
+@media(max-width:800px) { .hero-slide.is-detail { padding: 44px 24px 76px; justify-content: center; }.hero-slide.is-detail img { width: 74%; max-height: 100%; } }
