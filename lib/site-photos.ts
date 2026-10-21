@@ -1,5 +1,5 @@
 export type SitePhoto={src:string;alt:string;caption:string;position?:string;width:number;height:number};
-const photo=(file:string,alt:string,caption:string,width:number,height:number,position='50% 50%'):SitePhoto=>({src:`/images/program/${file}.webp`,alt,caption,width,height,position});
+const photo=(file:string,alt:string,caption:string,width:number,height:number,position='50% 50%'):SitePhoto=>({src:`/images/program/${file}-original.webp`,alt,caption,width,height,position});
 export const programPhotos={
  main:photo('coast-overlook','이기대에서 바라본 오륙도와 해안 산책길','이기대에서 만나는 오륙도',880,586,'50% 58%'),
  taping:photo('taping-complete','무릎에 안전걷기 테이핑을 마친 모습','안전걷기 테이핑',861,579,'50% 52%'),

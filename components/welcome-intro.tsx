@@ -11,6 +11,7 @@ export default function WelcomeIntro({src}:{src:string}){
   photo.onerror=()=>{if(active){clearTimeout(fail);setPhase('hidden');}};photo.src=src;
   return()=>{active=false;clearTimeout(fail);clearTimeout(leave);clearTimeout(end);};
  },[src]);
+ useEffect(()=>{if(phase==='hidden'){document.documentElement.dataset.welcome='finished';window.dispatchEvent(new Event('saferoad:welcome-finished'));}},[phase]);
  if(phase==='hidden')return null;
  return <div className={`welcome-intro ${phase==='leaving'?'is-leaving':''}`} aria-label="오륙도에 오신 것을 환영합니다"><img src={src} alt="바다 위 오륙도와 등대" loading="eager" fetchPriority="high"/><div className="welcome-shade"/><div className="welcome-copy"><p>사단법인 부산치유협회와 함께</p><h2>오륙도에서 만나는<br/>건강한 한 걸음.</h2><span>코리아둘레길 · 오륙도 안전걷기로드</span></div><button type="button" onClick={()=>{dismissed.current=true;setPhase('hidden');}}>바로 들어가기 ↗</button></div>;
 }
