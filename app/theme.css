@@ -227,3 +227,11 @@ footer small, .project-background, .footer-heading>span { color: #d3ddcf; }
   .hero-slide { transition: none; }
   .hero-slide.is-active img { animation: none; transform: none; }
 }
+
+/* Keep navigation easy to tap and show feedback while a route is loading. */
+.header nav a { display: inline-flex; align-items: center; min-height: 44px; }
+.hero-photo-controls button { width: 44px; height: 44px; }
+.navigation-status { position: fixed; z-index: 1100; left: 50%; bottom: 24px; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; padding: 12px 20px; border: 1px solid var(--gold); border-radius: 30px; background: var(--forest); color: var(--ivory); font-size: 14px; white-space: nowrap; box-shadow: 0 6px 24px #0002; pointer-events: none; }
+.loading-ring { display: inline-block; width: 18px; height: 18px; border: 2px solid var(--line); border-top-color: var(--gold); border-radius: 50%; animation: route-loading .9s linear infinite; }
+@keyframes route-loading { to { transform: rotate(360deg); } }
+@media(prefers-reduced-motion:reduce) { .loading-ring { animation: none; } }

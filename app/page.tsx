@@ -1,3 +1,4 @@
+import SiteLink from '@/components/site-link';
 import HeroPhotos from '@/components/hero-photos';
 import {programPhotos} from '@/lib/site-photos';
 import CompletedSessions from '@/components/completed-sessions';
@@ -10,7 +11,7 @@ export const dynamic='force-dynamic';
 export default async function Home() {
  const data=await publicData();
  const migrationPending=data.connected&&data.settings.consent_revision!==4;
- return <main><section className="hero"><div className="hero-copy"><p className="eyebrow">BUSAN NAM-GU · KOREA DULLEGIL</p><span className="pill">전문가와 함께하는 걷기 체험</span><h1>바다를 곁에 두고,<br/>건강한 한 걸음.</h1><p className="intro">오륙도에서 시작하는 안전한 걷기 습관.<br/>테이핑부터 바른 걷기, 자가회복까지 함께해요.</p><a className="button" href="#apply">체험 일정 확인하기 <span>↗</span></a><div className="hero-facts"><span>참가비 <b>1인 10,000원</b></span><span>회차별 <b>최대 30명</b></span></div></div><HeroPhotos/></section>
+ return <main><section className="hero"><div className="hero-copy"><p className="eyebrow">BUSAN NAM-GU · KOREA DULLEGIL</p><span className="pill">전문가와 함께하는 걷기 체험</span><h1>바다를 곁에 두고,<br/>건강한 한 걸음.</h1><p className="intro">오륙도에서 시작하는 안전한 걷기 습관.<br/>테이핑부터 바른 걷기, 자가회복까지 함께해요.</p><SiteLink className="button" href="#apply">체험 일정 확인하기 <span>↗</span></SiteLink><div className="hero-facts"><span>참가비 <b>1인 10,000원</b></span><span>회차별 <b>최대 30명</b></span></div></div><HeroPhotos/></section>
  <section id="program" className="section"><p className="eyebrow">A WALK FOR YOUR WELLBEING</p><h2>잘 걷는 법부터, 나를 돌보는 시간까지</h2><div className="cards experience-photo-grid">{[
  {photo:programPhotos.taping,step:'01 / PREPARE',title:'안전걷기 테이핑',label:'몸을 준비하는 시간',body:'전문가의 안내에 따라 걷기 전 몸을 준비합니다.'},
  {photo:programPhotos.walking,step:'02 / WALK',title:'바른자세 걷기',label:'바다와 숲을 잇는 걸음',body:'해안길을 걸으며 나에게 맞는 올바른 자세를 배웁니다.'},

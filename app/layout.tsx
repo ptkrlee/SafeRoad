@@ -1,6 +1,6 @@
 import ReadableText from '@/components/readable-text';
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import Link from '@/components/site-link';
 import WelcomeIntro from '@/components/welcome-intro';
 import {welcomePhoto} from '@/lib/branding';
 import './globals.css';

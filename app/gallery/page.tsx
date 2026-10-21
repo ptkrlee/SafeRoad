@@ -1,5 +1,5 @@
 import ReadableText from '@/components/readable-text';
-import Link from 'next/link';
+import Link from '@/components/site-link';
 import {configured,database} from '@/lib/supabase';
 import {formatDate} from '@/lib/domain';
 export const dynamic='force-dynamic';

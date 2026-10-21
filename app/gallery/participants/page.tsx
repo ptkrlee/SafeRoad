@@ -1,5 +1,5 @@
 import ReadableText from '@/components/readable-text';
-import Link from 'next/link';
+import Link from '@/components/site-link';
 import {participantGalleryAccess,participantGalleryConfigured,participantGalleryDatabase} from '@/lib/participant-gallery-server';
 import {formatDate} from '@/lib/domain';
 import {enterPhotoRoom,leavePhotoRoom} from './actions';
