@@ -326,3 +326,122 @@ footer small, .project-background, .footer-heading>span { color: #d3ddcf; }
 .session-control.is-completed p, .session-control.is-completed label { color: #626c67; }
 .session-control.is-completed input:not([type=checkbox]) { background: #fafbfa; color: #626c67; border-color: #d3d9d6; }
 .session-control.is-completed .small-button { color: #626c67; border-color: #bcc5c0; }
+
+/* A coastal editorial layer: ivory light, photographic fades and fine gold contours. */
+.public-page {
+  background: radial-gradient(ellipse 60% 540px at 100% 24%, #e8eddf66, transparent),
+    radial-gradient(ellipse 65% 600px at 0% 57%, #eee2c84d, transparent);
+}
+.header { background: linear-gradient(110deg, #fffefa, #f9f6ed 75%, #f0eee4); }
+.coastal-heading {
+  position: relative; isolation: isolate; overflow: hidden;
+  margin-bottom: 32px; padding: 34px 38px;
+  border: 1px solid #ded5c1; border-radius: 18px;
+  background: linear-gradient(110deg, #fbf8ef, #eee5d2 70%, #dae2d5);
+  box-shadow: inset 0 1px 0 #fff, 0 12px 32px #493d2105;
+}
+.coastal-heading::after {
+  content: ''; position: absolute; z-index: -1; inset: 0 0 0 42%;
+  background: url('/images/graphics/coastal-lines.svg') right center / auto 160% no-repeat;
+  opacity: .55; pointer-events: none;
+}
+.coastal-heading-photo {
+  position: absolute; z-index: -2; inset: 0 0 0 40%; opacity: .6;
+  mask-image: linear-gradient(90deg, transparent, #000 64%);
+  pointer-events: none;
+}
+.coastal-heading-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.coastal-heading-copy { max-width: 68%; }
+.coastal-heading .eyebrow { color: #7a6036; margin-bottom: 16px; }
+.coastal-heading h1, .coastal-heading h2 { margin: 0; color: var(--forest); }
+.coastal-heading h2 { font-size: clamp(26px, 2.8vw, 36px); }
+.coastal-heading p:not(.eyebrow) { margin: 18px 0 0; color: #4e5d51; }
+.coastal-heading .button { margin-top: 24px; }
+.guide-heading { padding-bottom: 36px; }
+.guide-heading .coastal-heading { padding-block: 48px; margin-bottom: 0; }
+.gallery-page>.coastal-heading { margin-bottom: 28px; }
+.hero-copy::before {
+  content: ''; position: absolute; z-index: -1; inset: 0 -40% 0 0;
+  background: url('/images/graphics/coastal-lines.svg') right bottom / auto 90% no-repeat;
+  opacity: .16; pointer-events: none;
+}
+.photo-experience {
+  box-shadow: 0 10px 30px #102b2408;
+  background: linear-gradient(135deg, #fffdf8, #f1ecdf);
+}
+.experience-photo-copy { background: linear-gradient(120deg, #fffdf8, #f2ecdf); }
+.photo-experience:nth-child(2) .experience-photo-copy { background: linear-gradient(120deg, #fbfcf7, #eaf0e4); }
+.experience-photo-copy>small { display: inline-flex; align-items: center; gap: 8px; }
+.experience-photo-copy>small::before { content: ''; width: 20px; height: 1px; background: var(--gold); }
+.program-details {
+  padding: 26px 28px; border: 1px solid #ded5c1; border-radius: 14px;
+  background: linear-gradient(115deg, #f8f5eb, #fffefa 55%, #edf1e7);
+}
+.manual-story {
+  position: relative; isolation: isolate;
+  background: radial-gradient(ellipse at 100% 0, #42654b80, transparent 62%),
+    linear-gradient(125deg, #102b24, #1b3b2e);
+  box-shadow: 0 18px 48px #102b2412;
+}
+.manual-story::before {
+  content: ''; position: absolute; z-index: -1; inset: 0; border-radius: inherit;
+  background: url('/images/graphics/coastal-lines.svg') right top / auto 100% no-repeat;
+  opacity: .18; pointer-events: none;
+}
+.manual-story .experience-icon { box-shadow: inset 0 1px 0 #ffffff1a; }
+.course-activities>span { background: linear-gradient(140deg, #fffdf6, #f0ebdd); box-shadow: inset 0 1px 0 #fff; }
+.course-card { box-shadow: 0 12px 30px #102b2408; }
+.course-card-copy { background: linear-gradient(135deg, #fbf8ef, #eee8d9); }
+.course-card:nth-child(2) .course-card-copy { background: linear-gradient(135deg, #fafcf6, #e9efe4); }
+.course-photo { position: relative; }
+.course-photo::after { content: ''; position: absolute; inset: 60% 0 0; background: linear-gradient(transparent, #102b2433); pointer-events: none; }
+.before-walk .prep-card { background: linear-gradient(135deg, #fffdf6, #f2eddf); box-shadow: 0 8px 22px #493d2105; }
+.before-walk .prep-card:nth-child(2) { background: linear-gradient(135deg, #fbfcf6, #ecf0e5); }
+.prep-icon { background: linear-gradient(135deg, #f6ead0, #e6d7b5); box-shadow: inset 0 1px 0 #fff9; }
+.guide-faq {
+  padding: 40px; border: 1px solid #ddd5c3; border-radius: 20px;
+  background: radial-gradient(ellipse at 100% 0%, #e8eddc99, transparent 55%), linear-gradient(120deg, #fbf8f0, #fffefa);
+}
+.guide-faq details { border-bottom-color: #d8d6c8; }
+.application-section .section-heading {
+  position: relative; isolation: isolate; padding: 28px 30px;
+  border: 1px solid #d8d5c1; border-radius: 16px;
+  background: linear-gradient(110deg, #f9f6ec 52%, #e5ecdd);
+}
+.application-section .section-heading::before {
+  content: ''; position: absolute; z-index: -1; inset: 0; border-radius: inherit;
+  background: url('/images/graphics/coastal-lines.svg') right center / auto 200% no-repeat;
+  opacity: .3; pointer-events: none;
+}
+.application-section .section-heading h2::after { margin-top: 14px; background: linear-gradient(90deg, #b08d57, #dccaa4); }
+.application-section .session:not(:disabled):not(.selected) { background: linear-gradient(145deg, #fffefa, #f5f2e7); }
+.application-section .session.selected { background: linear-gradient(130deg, #102b24, #315740); }
+.application-form { background: linear-gradient(120deg, #fff, #fdfbf5); box-shadow: 0 14px 38px #493d2108; }
+.precaution-card .precaution-visual {
+  position: relative; isolation: isolate;
+  background: radial-gradient(ellipse at 80% 0%, #ffffffb3, transparent 70%), linear-gradient(140deg, var(--safety-copy), var(--safety-visual));
+}
+.precaution-visual::after {
+  content: ''; position: absolute; z-index: -1; inset: 0;
+  background: url('/images/graphics/coastal-lines.svg') right center / auto 260% no-repeat;
+  opacity: .3; pointer-events: none;
+}
+.precaution-card .precaution-copy { background: linear-gradient(120deg, #ffffff80, transparent), var(--safety-copy); }
+footer { background: radial-gradient(ellipse at 0 100%, #36513d80, transparent 65%), var(--forest); }
+@media(max-width:800px) {
+  .coastal-heading { padding: 28px 24px; }
+  .coastal-heading-copy { max-width: 88%; }
+  .coastal-heading-photo { inset-inline-start: 22%; opacity: .28; }
+  .coastal-heading::after { opacity: .35; inset-inline-start: 10%; }
+  .guide-heading .coastal-heading { padding-block: 34px; }
+  .hero-copy::before { inset: 0; background-size: auto 100%; opacity: .12; }
+  .program-details { padding: 22px; }
+  .guide-faq { padding: 28px 22px; }
+  .application-section .section-heading { padding: 24px 22px; }
+}
+@media(max-width:480px) {
+  .coastal-heading-copy { max-width: 100%; }
+  .coastal-heading-photo { opacity: .2; }
+  .coastal-heading h2 { font-size: 26px; }
+  .coastal-heading h1 { font-size: 32px; }
+}
