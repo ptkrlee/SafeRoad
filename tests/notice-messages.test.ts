@@ -5,6 +5,7 @@ import {buildNoticeMessage,noticeDeadlineDefaults,changeOptions,noticeRecipients
 const sessions=initialSessions.map(s=>({...s,accepting:true}));const settings={...initialSettings,published:true};
 test('진행 안내는 회차의 실제 날짜·요일·코스·집결과 종료 시간을 채운다',()=>{
  const text=buildNoticeMessage({kind:'confirmed',session:sessions[0],settings});
+ assert.match(text,/신청하신 오륙도 안전걷기로드 체험프로그램의 진행을 안내드립니다./);assert.match(text,/걷기 코스: 해파랑길 1코스 · 왕복 4km\n▶ 준비물:/);
  assert.match(text,/2026년 10월 23일 \(금\)/);assert.match(text,/오전 9시 30분까지 집결/);assert.match(text,/낮 12시 30분~오후 1시경/);assert.match(text,/해파랑길/);assert.match(text,/무릎 위/);assert.doesNotMatch(text,/10\. 02|한국치유협회 부산지회/);
 });
 test('취소 안내의 변경 후보는 과거·취소·마감·정원 초과 회차를 제외하며 전액 환불을 안내한다',()=>{
