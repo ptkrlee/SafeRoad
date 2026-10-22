@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {initialSessions,initialSettings} from '../lib/domain';
-import {buildNoticeMessage,changeOptions,noticeRecipients,type NoticeRecipient} from '../lib/notice-messages';
+import {buildNoticeMessage,noticeDeadlineDefaults,changeOptions,noticeRecipients,type NoticeRecipient} from '../lib/notice-messages';
 const sessions=initialSessions.map(s=>({...s,accepting:true}));const settings={...initialSettings,published:true};
 test('진행 안내는 회차의 실제 날짜·요일·코스·집결과 종료 시간을 채운다',()=>{
  const text=buildNoticeMessage({kind:'confirmed',session:sessions[0],settings});
@@ -16,7 +16,7 @@ test('취소 안내의 변경 후보는 과거·취소·마감·정원 초과 �
 test('미입금 안내는 최신 계좌를 사용하고 별도 기한과 전화 부재를 임의로 만들지 않는다',()=>{
  const input={kind:'unpaid' as const,session:sessions[1],settings:{...settings,fee:12000,bank:'가상은행',account:'TEST-ACCOUNT',holder:'가상예금주'}};
  const basic=buildNoticeMessage(input);assert.match(basic,/12,000원/);assert.match(basic,/가상은행 TEST-ACCOUNT/);assert.match(basic,/예금주: 가상예금주/);assert.match(basic,/신청서에 적으신 입금자명/);assert.doesNotMatch(basic,/마감일|5\/29|입금 요청 기한|자동.*취소/);
- const deadline=buildNoticeMessage({...input,deadlineDate:'2026-11-13',deadlineTime:'14:00'});assert.match(deadline,/2026년 11월 13일 \(금\) 오후 2시까지/);
+ const deadline=buildNoticeMessage({...input,deadlineDate:'2026-11-13',deadlineTime:'14:00'});assert.match(deadline,/2026년 11월 13일 \(금\) 오후 2시/);
 });
 test('안내 대상은 최초 회차가 아닌 현재 회차로 분류하고 미입금 취소자는 제외한다',()=>{
  const base:NoticeRecipient={id:'moved',session_id:sessions[1].id,original_session_id:sessions[0].id,name:'가상 신청자',phone:'01000000001',people:2,status:'active',payment:'unconfirmed',refund:'none',notice:'needed',moved:true};
@@ -43,5 +43,13 @@ test('취소 안내는 요청한 양식으로 생성하고 날짜와 변경 코�
 
 문의·취소·변경: 010-9679-9817
 문자를 남겨주시면 순차적으로 안내해드리겠습니다.
+
 감사합니다.`);
 });
+
+ test('미입금 문자는 요청한 기한과 마무리를 사용하고 기본 기한은 지정된 회차에만 넣는다',()=>{
+ assert.deepEqual(noticeDeadlineDefaults('2026-10-23'),{date:'2026-10-22',time:'15:00'});assert.deepEqual(noticeDeadlineDefaults('2026-11-14'),{date:'',time:''});
+ const text=buildNoticeMessage({kind:'unpaid',session:sessions[0],settings,deadlineDate:'2026-10-22',deadlineTime:'15:00'});
+ assert.match(text,/▶ 입금 기한: 2026년 10월 22일 \(목\) 오후 3시/);assert.doesNotMatch(text,/즉시 입금|입금 시각/);assert.match(text,/입금자명을 문자로 알려주시면 확인하겠습니다./);
+ for(const kind of ['unpaid','confirmed','cancelled'] as const)assert.match(buildNoticeMessage({kind,session:sessions[0],settings}),/문의·취소·변경: 010-9679-9817\n문자를 남겨주시면 순차적으로 안내해드리겠습니다.\n\n감사합니다.$/);
+ });

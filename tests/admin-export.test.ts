@@ -19,3 +19,9 @@ test('XLSX export is scoped to the selected round, includes over 1000 records an
  const book=new ExcelJS.Workbook();await book.xlsx.load(await response.arrayBuffer());const sheet=book.getWorksheet('신청자 명단')!;assert.equal(sheet.rowCount,1002);assert.equal(sheet.getCell('D2').value,row.name);assert.equal(sheet.getCell('D2').type,ExcelJS.ValueType.String);assert.equal(sheet.getCell('E2').value,'01000000001');assert.equal(sheet.getCell('J2').value,'운영 종료 · 참석 미확인');assert.match(response.headers.get('content-disposition')||'',/attachment/);assert.match(response.headers.get('cache-control')||'',/no-store/);
 });
 test('failed export returns an error instead of an incomplete spreadsheet',async()=>{const {db}=stub({fail:true});const response=await applicationExportResponse(request(),db);assert.equal(response.status,503);assert.doesNotMatch(await response.text(),/internal detail/);});
+
+import {applicationWorkbook} from '../lib/application-export';
+test('missing historical fields remain blank in XLSX and original notes are available separately',async()=>{
+ const data=await applicationWorkbook(session,[{...row,source:'naver_archive',phone:null,address:null,people:null,depositor:null,total:null,status:null,payment:null,refund:null,notice:null,created_at:null,legacy_archive_data:{sheet:'운영',originalRow:2,headers:['신청자명','메모'],cells:[row.name,'환불(5/10)']}}],new Map([[session.id,session.date]]));
+ const book=new ExcelJS.Workbook();await book.xlsx.load(Uint8Array.from(data).buffer);const sheet=book.getWorksheet('신청자 명단')!;for(const column of ['E','F','G','H','I','J','K','L','M','O'])assert.equal(sheet.getCell(column+'2').value,null);assert.equal(book.getWorksheet('지난 운영 원본')!.getCell('E3').value,'환불(5/10)');
+});

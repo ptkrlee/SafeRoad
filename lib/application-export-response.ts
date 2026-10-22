@@ -19,7 +19,7 @@ export async function applicationExportResponse(request:Request,db:Awaited<Retur
   if(!session)return failure('해당 회차가 없습니다.',404);
   const rows:ExportApplication[]=[];
   for(let offset=0;;offset+=1000){
-   const {data,error}=await db.from('applications').select('id,original_session_id,name,phone,address,people,depositor,total,status,payment,refund,notice,created_at,source,moved').eq('session_id',session.id).order('created_at',{ascending:true}).order('id',{ascending:true}).range(offset,offset+999);
+   const {data,error}=await db.from('applications').select('*').eq('session_id',session.id).order('created_at',{ascending:true,nullsFirst:false}).order('id',{ascending:true}).range(offset,offset+999);
    if(error)return failure('명단을 불러오지 못했습니다. 잠시 후 다시 시도해주세요.',503);
    rows.push(...(data||[]) as ExportApplication[]);
    if(!data||data.length<1000)break;

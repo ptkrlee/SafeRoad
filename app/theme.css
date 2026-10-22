@@ -65,7 +65,7 @@ nav a:hover { color: var(--green); text-decoration: underline; text-decoration-c
 .prep-icon svg { width: 27px; height: 27px; }
 .prep-copy { display: contents; }
 .before-walk .prep-copy h3 { align-self: center; margin: 0; font-size: var(--card-title-size); line-height: 1.5; }
-.before-walk .prep-copy p { grid-column: 2; margin: 0; font-size: var(--card-body-size); line-height: 1.9; }
+.before-walk .prep-copy p { grid-column: 1 / -1; margin: 0; font-size: var(--card-body-size); line-height: 1.9; }
 .notice { background: #f4f5ea; border-color: #c9d3bd; border-left: 3px solid var(--gold); }
 .guide-faq summary { color: var(--forest); }
 .guide-faq details[open] { border-bottom-color: var(--gold); }
@@ -307,3 +307,11 @@ footer small, .project-background, .footer-heading>span { color: #d3ddcf; }
 .past-history-section .completed-sessions { margin: 0; padding: 24px 0; border-bottom: 0; }
 .application-section { padding-top: 32px; }
 .application-section .upcoming-sessions-heading { margin-top: 0; }
+.admin-sessions { align-items: start; }
+.session-control>summary h3 { display: inline; font-size: 18px; }
+.session-control>summary { padding: 2px 0; }
+.session-control[open]>summary { margin-bottom: 18px; }
+.archive-source { margin-top: 12px; max-width: 280px; font-size: 12px; }
+.archive-source dl { margin: 10px 0 0; padding: 10px; background: #f3f4ef; }
+.archive-source dt { font-weight: 600; color: var(--muted); }
+.archive-source dd { margin: 2px 0 10px; white-space: pre-wrap; overflow-wrap: anywhere; }
