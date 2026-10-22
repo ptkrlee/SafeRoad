@@ -7,7 +7,7 @@ const labels={paid:'입금 확인',cancel:'취소 처리',contacted:'연락 확�
 const Selection=createContext<{selected:Set<string>;toggle:(id:string)=>void;busy:boolean}>({selected:new Set(),toggle:()=>{},busy:false});
 export function ApplicationSelect({id,name}:{id:string;name:string}){
  const {selected,toggle,busy}=useContext(Selection);
- return <input type="checkbox" checked={selected.has(id)} onChange={()=>toggle(id)} disabled={busy} aria-label={`${name} 신청 선택`}/>;
+ return <label className="application-select-control"><input type="checkbox" checked={selected.has(id)} onChange={()=>toggle(id)} disabled={busy} aria-label={`${name} 신청 선택`}/></label>;
 }
 export default function BulkApplicationActions({applications,completedIds,children}:{applications:BulkApplication[];completedIds:string[];children:ReactNode}){
  const router=useRouter();const[checked,setChecked]=useState<string[]>([]);const[operation,setOperation]=useState<BulkOperation>('paid');const[confirmed,setConfirmed]=useState(false);const[busy,setBusy]=useState(false);const[message,setMessage]=useState('');

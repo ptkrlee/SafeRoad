@@ -1,0 +1,8 @@
+import {z} from 'zod';
+import {applicationSchema} from './domain';
+export const editPinSchema=z.string().min(4,'변경용 비밀번호는 숫자 4~12자리로 입력해주세요.').max(12,'변경용 비밀번호는 숫자 4~12자리로 입력해주세요.').refine(value=>[...value].every(c=>c>='0'&&c<='9'),'변경용 비밀번호는 숫자 4~12자리로 입력해주세요.');
+export const applicationWithPinSchema=applicationSchema.extend({editPin:editPinSchema});
+export const editLookupSchema=z.object({phone:z.string().transform(v=>v.replace(/[\s-]/g,'')).pipe(z.string().regex(/^01[016789]\d{7,8}$/)),pin:editPinSchema});
+export const participantEditSchema=z.object({id:z.string().uuid(),version:z.number().int().min(0),name:applicationSchema.shape.name,address:applicationSchema.shape.address,phone:applicationSchema.shape.phone,people:z.number().int().min(1).max(30),depositor:applicationSchema.shape.depositor,amountConfirmed:z.boolean()});
+export const adminEditSchema=z.object({id:z.string().uuid(),version:z.number().int().min(0),name:z.string().trim().max(1000).nullable(),address:z.string().trim().max(2000).nullable(),phone:z.string().trim().max(1000).nullable(),people:z.number().int().min(1).max(500).nullable(),depositor:z.string().trim().max(1000).nullable(),amountConfirmed:z.boolean(),newPin:z.union([z.literal(''),editPinSchema]).default('')});
+export type EditableApplication={id:string;name:string|null;address:string|null;phone:string|null;people:number|null;depositor:string|null;total:number|null;status:string|null;payment:string|null;refund:string|null;edit_version:number;payment_review_required?:boolean;date:string;course:string|null;start_time:string|null;editable:boolean;fee:number};

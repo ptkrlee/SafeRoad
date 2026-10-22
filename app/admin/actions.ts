@@ -64,3 +64,13 @@ export async function bulkApplications(input:unknown):Promise<import('@/lib/bulk
  catch{return {processed:[],skipped:[],failed:[],error:'연결 상태를 확인하지 못했습니다. 새로고침 후 현재 상태를 확인해주세요.'};}
  finally{revalidatePath('/admin');revalidatePath('/');}
 }
+
+export async function editApplication(input:unknown):Promise<{error?:string;ok?:boolean;amountReview?:boolean}>{
+ const{adminEditSchema}=await import('@/lib/application-edit-schema');const parsed=adminEditSchema.safeParse(input);if(!parsed.success)return{error:parsed.error.issues[0].message};
+ try{const db=await database();const{data:{user}}=await db.auth.getUser();const{data:admin}=await db.rpc('is_admin');if(!user||admin!==true)return{error:'관리자 로그인을 확인해주세요.'};
+ const{hashEditPin}=await import('@/lib/application-edit-security');const{newPin,...payload}=parsed.data;const{data,error}=await db.rpc('edit_application_admin',{payload,new_access_hash:newPin?await hashEditPin(newPin):null});
+ if(error){const{applicationEditError}=await import('@/lib/application-edit-server');return{error:error.message?.includes('edit_application_admin')?'신청 수정 기능의 09-application-edit.sql 설치를 확인해주세요.':applicationEditError(error.message)};}
+ if(newPin&&payload.phone){try{const{applicationEditConfigured,applicationEditDatabase}=await import('@/lib/application-edit-server');const{editLimitKey}=await import('@/lib/application-edit-security');if(applicationEditConfigured())await applicationEditDatabase().rpc('application_edit_limit',{input_key:editLimitKey('phone',payload.phone.replace(/[\s-]/g,''),process.env.SUPABASE_SECRET_KEY!),max_attempts:5,clear_success:true});}catch{/* A saved PIN remains valid; the normal retry window still applies. */}}
+ revalidatePath('/');revalidatePath('/admin');return{ok:true,amountReview:data.amountReview};
+ }catch{return{error:'저장 결과를 확인하지 못했습니다. 최신 명단을 조회한 뒤 다시 확인해주세요.'};}
+}

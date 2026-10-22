@@ -1,0 +1,2 @@
+import SiteLink from '@/components/site-link';
+export default function ApplicationEditLink(){return <div className="application-edit-shortcut"><div><strong>이미 체험을 신청하셨나요?</strong><span>전화번호와 변경용 비밀번호로 신청내역을 확인하고 수정하세요.</span></div><SiteLink className="small-button" href="/application-edit"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M15 4 20 9M4 20l5-1 12-12a2 2 0 0 0-5-5L4 15z"/></svg>신청내역 확인·변경</SiteLink></div>;}

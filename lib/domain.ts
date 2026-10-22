@@ -9,7 +9,7 @@ export const applicationSchema = z.object({
   website: z.string().max(0).default(''), photoConsent:z.boolean(),privatePhotoConsent:z.boolean(), formRevision:z.literal(4),
 });
 export type Session = { id: string; date: string; start_time: string | null; course: string | null; capacity: number; minimum: number; accepting: boolean; cancelled: boolean; completed?:boolean; notice_date: string | null; booked: number };
-export type Settings = { bank: string; account: string; holder: string; fee: number; privacy_text: string; refund_text: string; published: boolean; version: number; photo_text?:string; consent_revision?:number };
+export type Settings = { bank: string; account: string; holder: string; fee: number; privacy_text: string; refund_text: string; published: boolean; version: number; photo_text?:string; consent_revision?:number;application_edit_ready?:boolean };
 export const initialSettings: Settings = { bank: '농협', account: '301-0365-1653-61', holder: '부산치유협회', fee: 10000, privacy_text: '', refund_text: '', published: false, version: 1 };
 export const initialSessions: Session[] = [
   { id:'00000000-0000-4000-8000-000000000001', date:'2026-10-23', notice_date:'2026-10-22', course:'해파랑길 1코스 · 왕복 4km' },

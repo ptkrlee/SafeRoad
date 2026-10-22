@@ -54,3 +54,8 @@ test('취소 안내는 요청한 양식으로 생성하고 날짜와 변경 코�
  assert.match(text,/▶ 입금 기한: 2026년 10월 22일 \(목\) 오후 3시/);assert.doesNotMatch(text,/즉시 입금|입금 시각/);assert.match(text,/입금자명을 문자로 알려주시면 확인하겠습니다./);
  for(const kind of ['unpaid','confirmed','cancelled'] as const)assert.match(buildNoticeMessage({kind,session:sessions[0],settings}),/문의·취소·변경: 010-9679-9817\n문자를 남겨주시면 순차적으로 안내해드리겠습니다.\n\n감사합니다.$/);
  });
+
+test('인원 변경으로 금액 재확인이 필요한 기존 입금자는 전액 미입금 독촉 대상에서 제외한다',()=>{
+ const base:NoticeRecipient={id:'review',session_id:sessions[0].id,original_session_id:sessions[0].id,name:'가상 신청',phone:'01000000001',people:2,status:'active',payment:'unconfirmed',refund:'none',notice:'needed',moved:false,payment_review_required:true};
+ assert.equal(noticeRecipients([base],sessions[0].id,'unpaid').length,0);assert.equal(noticeRecipients([base],sessions[0].id,'confirmed').length,1);
+});

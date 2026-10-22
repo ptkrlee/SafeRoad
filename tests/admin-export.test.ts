@@ -25,3 +25,7 @@ test('missing historical fields remain blank in XLSX and original notes are avai
  const data=await applicationWorkbook(session,[{...row,source:'naver_archive',phone:null,address:null,people:null,depositor:null,total:null,status:null,payment:null,refund:null,notice:null,created_at:null,legacy_archive_data:{sheet:'운영',originalRow:2,headers:['신청자명','메모'],cells:[row.name,'환불(5/10)']}}],new Map([[session.id,session.date]]));
  const book=new ExcelJS.Workbook();await book.xlsx.load(Uint8Array.from(data).buffer);const sheet=book.getWorksheet('신청자 명단')!;for(const column of ['E','F','G','H','I','J','K','L','M','O'])assert.equal(sheet.getCell(column+'2').value,null);assert.equal(book.getWorksheet('지난 운영 원본')!.getCell('E3').value,'환불(5/10)');
 });
+
+test('XLSX distinguishes amount review after a headcount edit from an unpaid application',async()=>{
+ const data=await applicationWorkbook(session,[{...row,payment_review_required:true}],new Map([[session.id,session.date]]));const book=new ExcelJS.Workbook();await book.xlsx.load(Uint8Array.from(data).buffer);assert.equal(book.getWorksheet('신청자 명단')!.getCell('K2').value,'인원 변경 · 입금 금액 재확인');
+});

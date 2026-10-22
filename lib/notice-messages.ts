@@ -1,9 +1,9 @@
 import {withOfficeContact} from './contact';
 import {canApply,formatDate,koreaToday,type Session,type Settings} from './domain';
 export type NoticeKind='confirmed'|'cancelled'|'unpaid';
-export type NoticeRecipient={id:string;session_id:string;original_session_id:string;name:string|null;phone:string|null;people:number|null;status:string|null;payment:string|null;refund:string|null;notice:string|null;moved:boolean};
+export type NoticeRecipient={id:string;session_id:string;original_session_id:string;name:string|null;phone:string|null;people:number|null;status:string|null;payment:string|null;refund:string|null;notice:string|null;moved:boolean;payment_review_required?:boolean};
 export function noticeRecipients(applications:NoticeRecipient[],sessionId:string,kind:NoticeKind){
- return applications.filter(a=>a.session_id===sessionId&&(kind==='cancelled'?(a.status==='active'||a.status==='cancelled'):a.status==='active'&&(kind!=='unpaid'||a.payment==='unconfirmed')));
+ return applications.filter(a=>a.session_id===sessionId&&(kind==='cancelled'?(a.status==='active'||a.status==='cancelled'):a.status==='active'&&(kind!=='unpaid'||a.payment==='unconfirmed'&&!a.payment_review_required)));
 }
 export function changeOptions(sessions:Session[],settings:Settings,sessionId:string,today=koreaToday()){
  return sessions.filter(s=>s.id!==sessionId&&canApply(s,settings,today)).sort((a,b)=>a.date.localeCompare(b.date));
