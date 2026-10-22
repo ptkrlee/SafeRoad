@@ -9,6 +9,8 @@ create table if not exists private.application_edit_access(
  access_version uuid not null default gen_random_uuid()
 );
 create table if not exists private.application_edit_limits(key text primary key,started_at timestamptz not null default now(),attempts integer not null default 1);
+alter table private.application_edit_access enable row level security;
+alter table private.application_edit_limits enable row level security;
 revoke all on private.application_edit_access,private.application_edit_limits from public,anon,authenticated,service_role;
 create index if not exists application_edit_phone on public.applications(phone);
 -- Retain all existing admission/consent checks, but create the PIN in the same transaction.
