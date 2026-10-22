@@ -22,6 +22,6 @@ test('confirmed first five rounds are idempotent and preserve existing round det
   await db.exec(`update public.sessions set completed=false,cancelled=true where date='2026-05-09';`);
   await assert.rejects(db.exec(script),/취소로 기록된 회차/);
   await db.exec('rollback');
-  assert.equal((await db.query("select cancelled from public.sessions where date='2026-05-09'")).rows[0].cancelled,true);
+  assert.equal((await db.query<{cancelled:boolean}>("select cancelled from public.sessions where date='2026-05-09'")).rows[0].cancelled,true);
  }finally{await db.close();}
 });
