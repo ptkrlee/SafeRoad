@@ -16,6 +16,7 @@ export const initialSessions: Session[] = [
   { id:'00000000-0000-4000-8000-000000000002', date:'2026-11-14', notice_date:'2026-11-13', course:'남파랑길 1코스 · 왕복 6km' },
   { id:'00000000-0000-4000-8000-000000000003', date:'2026-11-21', notice_date:'2026-11-20', course:'해파랑길 1코스 · 왕복 4km' },
 ].map(s => ({ ...s, start_time:'09:30:00', capacity:30, minimum:10, accepting:false, cancelled:false, booked:0 }));
+export function formatGalleryDate(value:string,year=false) { return new Intl.DateTimeFormat('ko-KR', { timeZone:'Asia/Seoul', ...(year?{year:'numeric' as const}:{}), month:'long', day:'numeric', weekday:'long' }).format(new Date(value+'T12:00:00+09:00')); }
 export function formatDate(value:string) { return new Intl.DateTimeFormat('ko-KR', { timeZone:'Asia/Seoul', month:'long', day:'numeric', weekday:'short' }).format(new Date(value+'T12:00:00+09:00')); }
 export function koreaToday() { return new Intl.DateTimeFormat('en-CA', { timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit' }).format(new Date()); }
 export function canApply(s:Session, settings:Settings, today=koreaToday()) { return settings.published && s.accepting && !s.cancelled && !s.completed && s.date >= today && s.booked < s.capacity; }

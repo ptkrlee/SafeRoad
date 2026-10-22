@@ -30,3 +30,15 @@ test('invalid conditions are ignored and post-action return paths preserve only 
  for(const raw of ['https://evil.invalid/admin','//evil.invalid/admin','/gallery','javascript:alert(1)'])assert.equal(rosterReturnPath(raw),'/admin');
  assert(!rosterReturnPath('/admin?payment=paid&untrusted=value').includes('untrusted'));
 });
+
+test('dashboard shortcuts match unpaid, notice and refund rosters, including cancelled notices and historical refunds',async()=>{
+ const{adminMetricPresets}=await import('../lib/admin-metrics');
+ const rows=[row('unpaid'),row('cancelled-notice',{status:'cancelled'}),row('finished',{session_id:finished.id}),row('finished-refund',{session_id:finished.id,status:'cancelled',refund:'pending'})];
+ for(const[index,expected]of [[0,['unpaid']],[1,['cancelled-notice','unpaid']],[2,['finished-refund']]] as const){const preset=adminMetricPresets[index];const result=await queryRoster(stub(rows),preset.filters,[current,finished]);assert.deepEqual(result.data?.map(r=>r.id).sort(),[...expected].sort());assert.deepEqual(rosterFilters(Object.fromEntries(new URL(rosterPath(preset.filters),'https://example.test').searchParams)),preset.filters);}
+});
+
+test('dashboard counts use head-only queries without the roster display limit',async()=>{
+ let head=false;const q={select:(_columns:string,options:{head?:boolean})=>{head=options.head===true;return q;},eq:()=>q,not:()=>q,then:(resolve:(v:unknown)=>unknown)=>Promise.resolve({data:null,count:1205,error:null}).then(resolve)};
+ const result=await queryRoster({from:()=>q} as unknown as Parameters<typeof queryRoster>[0],rosterFilters({status:'active',payment:'unconfirmed'}),[current,finished],true);
+ assert.equal(head,true);assert.equal(result.count,1205);assert.equal(result.data,null);
+});
