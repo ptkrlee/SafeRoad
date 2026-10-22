@@ -29,3 +29,35 @@ export async function importApplications(input:unknown):Promise<{error?:string;i
  revalidatePath('/');revalidatePath('/admin');return {inserted:data.inserted,skipped:data.skipped};
  }catch{return {error:'처리 결과를 확인하지 못했습니다. 연결을 확인한 뒤 같은 파일을 다시 가져오면 기존 신청은 중복 등록하지 않습니다.'};}
 }
+
+export async function registerConfirmedHistory():Promise<{error?:string;added:number;completed:number}>{
+ let added=0;let completed=0;
+ try{
+  const {confirmedHistory}=await import('@/lib/confirmed-history');
+  const db=await database();const {data:{user}}=await db.auth.getUser();
+  if(!user)return {error:'관리자 로그인이 필요합니다.',added,completed};
+  const {data:admin}=await db.rpc('is_admin');
+  if(admin!==true)return {error:'관리자 권한을 확인해주세요.',added,completed};
+  const {data,error}=await db.rpc('session_list');
+  if(error||!Array.isArray(data))return {error:'회차 목록을 불러오지 못했습니다. 잠시 후 다시 시도해주세요.',added,completed};
+  const sessions=data as import('@/lib/domain').Session[];
+  if(!sessions.length||sessions.some(s=>typeof s.completed!=='boolean'))return {error:'지난 회차 관리용 DB 설정이 필요합니다. 아래의 ‘1~5회차 등록 SQL’ 파일 전체를 Supabase SQL Editor에서 실행한 뒤 새로고침해주세요.',added,completed};
+  if(sessions.some(s=>s.cancelled&&confirmedHistory.some(h=>h.date===s.date)))return {error:'1~5회차 중 취소로 기록된 날짜가 있습니다. 실제 진행 여부와 회차 설정을 확인해주세요. 이번 요청은 변경하지 않았습니다.',added,completed};
+  for(const round of confirmedHistory){
+   const existing=sessions.find(s=>s.date===round.date);
+   if(existing?.completed)continue;
+   const payload=existing?{id:existing.id,operation:'complete',confirmed:true}:{...round,capacity:30,confirmed:true};
+   const {error:failure}=await db.rpc(existing?'manage_session':'archive_session',{payload});
+   if(failure)return {error:`등록 중 연결 또는 회차 상태를 확인하지 못했습니다. ${added}회차 신규 등록, ${completed}회차 완료 처리까지 확인했습니다. 새로고침 후 다시 누르면 이미 완료된 회차는 건너뜁니다.`,added,completed};
+   if(existing)completed++;else added++;
+  }
+  return {added,completed};
+ }catch{return {error:`등록 결과를 확인하지 못했습니다. 새로고침한 뒤 다시 시도해주세요. 확인된 신규 ${added}회차·완료 처리 ${completed}회차입니다.`,added,completed};}
+ finally{revalidatePath('/');revalidatePath('/admin');}
+}
+
+export async function bulkApplications(input:unknown):Promise<import('@/lib/bulk-application-operation').BulkResult>{
+ try{const {performBulkApplications}=await import('@/lib/bulk-application-operation');return await performBulkApplications(await database(),input);}
+ catch{return {processed:[],skipped:[],failed:[],error:'연결 상태를 확인하지 못했습니다. 새로고침 후 현재 상태를 확인해주세요.'};}
+ finally{revalidatePath('/admin');revalidatePath('/');}
+}

@@ -1,0 +1,21 @@
+'use client';
+import {createContext,useContext,useState,type ReactNode} from 'react';
+import {useRouter} from 'next/navigation';
+import {bulkApplications} from '@/app/admin/actions';
+import {bulkEligible,type BulkApplication,type BulkOperation} from '@/lib/bulk-applications';
+const labels={paid:'입금 확인',cancel:'취소 처리',contacted:'연락 확인 완료'};
+const Selection=createContext<{selected:Set<string>;toggle:(id:string)=>void;busy:boolean}>({selected:new Set(),toggle:()=>{},busy:false});
+export function ApplicationSelect({id,name}:{id:string;name:string}){
+ const {selected,toggle,busy}=useContext(Selection);
+ return <input type="checkbox" checked={selected.has(id)} onChange={()=>toggle(id)} disabled={busy} aria-label={`${name} 신청 선택`}/>;
+}
+export default function BulkApplicationActions({applications,completedIds,children}:{applications:BulkApplication[];completedIds:string[];children:ReactNode}){
+ const router=useRouter();const[checked,setChecked]=useState<string[]>([]);const[operation,setOperation]=useState<BulkOperation>('paid');const[confirmed,setConfirmed]=useState(false);const[busy,setBusy]=useState(false);const[message,setMessage]=useState('');
+ const selected=new Set(checked.filter(id=>applications.some(a=>a.id===id)));const selectedRows=applications.filter(a=>selected.has(a.id));const eligible=selectedRows.filter(a=>bulkEligible(a,operation,new Set(completedIds)));
+ function toggle(id:string){setChecked(ids=>ids.includes(id)?ids.filter(x=>x!==id):[...ids,id]);setConfirmed(false);setMessage('');}
+ async function apply(){if(busy||!eligible.length||operation==='cancel'&&!confirmed)return;setBusy(true);setMessage('처리 중입니다. 완료될 때까지 기다려주세요.');
+  try{const ids=[...selected];const result:{processed:string[];skipped:string[];failed:string[];error?:string}={processed:[],skipped:[],failed:[]};for(let start=0;start<ids.length;start+=25){const batch=await bulkApplications({ids:ids.slice(start,start+25),operation,confirmed});result.processed.push(...batch.processed);result.skipped.push(...batch.skipped);result.failed.push(...batch.failed);if(batch.error){result.error=batch.error;break;}setMessage(`처리 중: ${Math.min(start+25,ids.length)} / ${ids.length}건 확인`);}setMessage(`${labels[operation]}: 완료 ${result.processed.length}건 · 이미 처리됐거나 해당 없음 ${result.skipped.length}건 · 실패 ${result.failed.length}건.${result.error?` ${result.error}`:''}`);setChecked(result.error?[...selected].filter(id=>!result.processed.includes(id)&&!result.skipped.includes(id)):result.failed);setConfirmed(false);router.refresh();}
+  catch{setMessage('일부 처리 결과를 확인하지 못했습니다. 새로고침 후 현재 상태를 확인해주세요.');router.refresh();}finally{setBusy(false);}
+ }
+ return <Selection.Provider value={{selected,toggle,busy}}><div className="bulk-toolbar"><div className="bulk-selection"><button type="button" className="small-button" disabled={busy} onClick={()=>{setChecked(applications.map(a=>a.id));setConfirmed(false);}}>현재 목록 전체 선택</button><button type="button" className="small-button" disabled={busy||!selected.size} onClick={()=>{setChecked([]);setConfirmed(false);}}>선택 해제</button><strong>선택 {selected.size}건 · 신청 {selectedRows.reduce((n,a)=>n+a.people,0)}명</strong></div><div className="filter"><label>일괄 처리<select value={operation} disabled={busy} onChange={e=>{setOperation(e.target.value as BulkOperation);setConfirmed(false);setMessage('');}}>{Object.entries(labels).map(([key,label])=><option key={key} value={key}>{label}</option>)}</select></label><button type="button" className="small-button" disabled={busy||!eligible.length||operation==='cancel'&&!confirmed} onClick={apply}>{busy?'처리 중…':`선택한 신청 ${labels[operation]}`}</button></div><p>처리 대상 {eligible.length}건 · 이미 처리됐거나 해당 없는 신청은 건너뜁니다.</p>{operation==='cancel'&&<label className="check bulk-cancel-confirm"><input type="checkbox" checked={confirmed} disabled={busy} onChange={e=>setConfirmed(e.target.checked)}/> 선택한 신청 중 참여 예정 {eligible.length}건을 취소합니다. 입금 확인 건은 환불 대기로 표시되며 실제 환불·문자 발송은 별도로 진행함을 확인했습니다.</label>}{message&&<p role="status">{message}</p>}</div><fieldset disabled={busy} className="bulk-table-fieldset">{children}</fieldset></Selection.Provider>;
+}

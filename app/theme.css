@@ -252,3 +252,37 @@ footer small, .project-background, .footer-heading>span { color: #d3ddcf; }
 .completed-badges>span:last-child { background: #dce3dd; }
 .completed-badges i { font-style: normal; margin-right: 3px; }
 @media(max-width:600px) { .completed-heading { align-items: flex-start; flex-direction: column; gap: 12px; }.session.completed-session { display: flex; flex-direction: column; min-height: 0; } }
+.history-import-setup { margin: 18px 0; padding: 18px; border: 1px solid #cbd2cd; border-radius: 12px; background: #edf0ed; }
+.history-import-setup p { margin: 8px 0 14px; }
+.history-import-setup small { display: block; color: var(--muted); margin-top: 10px; }
+/* Admin payment exceptions remain explicit in text as well as color. */
+.tag.payment-unconfirmed { background: #fbe8e7; color: #a32d35; border: 1px solid #edb8bd; font-weight: 700; }
+.bulk-toolbar { margin: 20px 0; padding: 20px; background: #f4f5ee; border: 1px solid #d5c7aa; border-radius: 12px; }
+.bulk-selection { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
+.bulk-selection strong { font-size: 14px; }
+.bulk-toolbar p { margin: 12px 0 0; font-size: 14px; }
+.bulk-cancel-confirm { margin-top: 14px; color: #873a3c; }
+.bulk-table-fieldset { padding: 0; margin: 0; border: 0; min-width: 0; }
+.bulk-table-fieldset:disabled { opacity: .6; }
+@media(max-width:600px) { .admin .filter { flex-wrap: wrap; }.admin .filter label { min-width: 0; width: 100%; } }
+/* Status and primary actions keep the same four positions after every update. */
+.row-status-grid { width: 228px; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+.row-status { min-height: 62px; padding: 9px 10px; border: 1px solid; border-radius: 8px; }
+.row-status small { display: block; color: inherit; font-size: 11px; opacity: .9; margin-bottom: 4px; }
+.row-status strong { display: block; font-size: 12px; line-height: 1.5; }
+.state-active { background: #e8f1e6; border-color: #bdcfb8; color: #28553b; }
+.state-unpaid { background: #fbe8e7; border-color: #e8adb5; color: #a32d35; }
+.state-attention { background: #fff2d9; border-color: #e5c886; color: #795719; }
+.state-done { background: #ecefed; border-color: #d0d6d2; color: #657168; }
+.row-actions { width: 260px; }
+.row-action-grid, .row-extra-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+.row-action-grid form { display: flex; margin: 0; }
+.row-action-grid .small-button { width: 100%; min-height: 44px; padding: 7px 5px; font-size: 12px; }
+.row-action-grid .small-button:not(:disabled) { background: #fffaf0; color: #3e5846; border-color: #bda678; }
+.row-action-grid .action-done { background: #ecefed; color: #788079; border-color: #d5d9d6; cursor: default; }
+.row-extra-grid { margin-top: 9px; }
+.row-extra-grid summary, .row-detail-disabled { min-height: 36px; padding: 7px 4px; font-size: 12px; }
+.row-detail-disabled { color: #929a94; }
+.row-extra-grid .login { margin-top: 10px; }
+.row-extra-grid select { min-width: 0; font-size: 12px; }
+.row-extra-grid .small-button { font-size: 12px; padding: 6px; width: 100%; }
