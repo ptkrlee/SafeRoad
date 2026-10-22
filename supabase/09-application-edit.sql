@@ -38,16 +38,15 @@ create or replace function public.application_edit_candidates(input_phone text) 
  ) x;
 $$;
 create or replace function public.application_edit_limit(input_key text,max_attempts integer,clear_success boolean default false) returns boolean language plpgsql security definer set search_path='' as $$
-declare n integer;
 begin
- if input_key !~ '^[a-f0-9]{64}$' or max_attempts not between 1 and 40 then return false;end if;
+ if input_key is null or input_key !~ '^[a-f0-9]{64}$' or max_attempts is null or max_attempts not between 1 and 40 then return false;end if;
  if clear_success then delete from private.application_edit_limits where key=input_key;return true;end if;
  delete from private.application_edit_limits where started_at<now()-interval '1 day';
  insert into private.application_edit_limits(key) values(input_key) on conflict(key) do update
  set attempts=case when private.application_edit_limits.started_at<now()-interval '15 minutes' then 1 else private.application_edit_limits.attempts+1 end,
- started_at=case when private.application_edit_limits.started_at<now()-interval '15 minutes' then now() else private.application_edit_limits.started_at end
- returning attempts into n;
- return n<=max_attempts;
+ started_at=case when private.application_edit_limits.started_at<now()-interval '15 minutes' then now() else private.application_edit_limits.started_at end;
+ -- The UPSERT holds its row lock until this function's transaction completes.
+ return coalesce((select l.attempts<=max_attempts from private.application_edit_limits l where l.key=input_key),false);
 end $$;
 create or replace function public.application_edit_records(accesses jsonb) returns jsonb language sql security definer set search_path='' as $$
  select coalesce(jsonb_agg(row_to_json(x)),'[]'::jsonb) from (

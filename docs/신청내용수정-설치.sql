@@ -1,8 +1,7 @@
--- 현재 운영 사이트용: 08 및 09 단계를 순서대로 적용합니다. 기존 신청은 삭제하지 않습니다.
-
--- Completed-round operational spreadsheets may have missing fields.
--- Website and standard Naver-form registrations keep their required constraints.
+-- 신청내용 수정 설치 수정본: 기존 신청 보존, RLS 직접 활성화, 한 트랜잭션으로 적용합니다.
+-- 전체를 새 SQL 창에 붙여넣고 실행하세요. 자동 RLS 추가는 필요하지 않습니다.
 begin;
+
 alter table public.applications add column if not exists legacy_archive_data jsonb;
 alter table public.applications add column if not exists legacy_imported_at timestamptz;
 alter table public.applications alter column name drop not null,alter column address drop not null,alter column phone drop not null,
@@ -80,12 +79,6 @@ begin
  else raise exception 'UNKNOWN_OPERATION'; end case;
 end $$;
 
-
-commit;
-select '8단계 준비 완료' as result;
-
--- Apply after 08. PIN hashes stay in private tables, never in roster exports or logs.
-begin;
 alter table public.settings add column if not exists application_edit_ready boolean not null default true;
 alter table public.applications add column if not exists edit_version integer not null default 0;
 alter table public.applications add column if not exists payment_review_required boolean not null default false;
@@ -124,16 +117,15 @@ create or replace function public.application_edit_candidates(input_phone text) 
  ) x;
 $$;
 create or replace function public.application_edit_limit(input_key text,max_attempts integer,clear_success boolean default false) returns boolean language plpgsql security definer set search_path='' as $$
-declare n integer;
 begin
- if input_key !~ '^[a-f0-9]{64}$' or max_attempts not between 1 and 40 then return false;end if;
+ if input_key is null or input_key !~ '^[a-f0-9]{64}$' or max_attempts is null or max_attempts not between 1 and 40 then return false;end if;
  if clear_success then delete from private.application_edit_limits where key=input_key;return true;end if;
  delete from private.application_edit_limits where started_at<now()-interval '1 day';
  insert into private.application_edit_limits(key) values(input_key) on conflict(key) do update
  set attempts=case when private.application_edit_limits.started_at<now()-interval '15 minutes' then 1 else private.application_edit_limits.attempts+1 end,
- started_at=case when private.application_edit_limits.started_at<now()-interval '15 minutes' then now() else private.application_edit_limits.started_at end
- returning attempts into n;
- return n<=max_attempts;
+ started_at=case when private.application_edit_limits.started_at<now()-interval '15 minutes' then now() else private.application_edit_limits.started_at end;
+ -- The UPSERT holds its row lock until this function's transaction completes.
+ return coalesce((select l.attempts<=max_attempts from private.application_edit_limits l where l.key=input_key),false);
 end $$;
 create or replace function public.application_edit_records(accesses jsonb) returns jsonb language sql security definer set search_path='' as $$
  select coalesce(jsonb_agg(row_to_json(x)),'[]'::jsonb) from (
