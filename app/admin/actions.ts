@@ -2,6 +2,7 @@
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { database } from '@/lib/supabase';
+import {rosterReturnPath} from '@/lib/admin-application-filters';
 export async function login(form:FormData) {
  let ok=false;
  try {const db=await database();const {error}=await db.auth.signInWithPassword({email:String(form.get('email')||''),password:String(form.get('password')||'')});if(!error){const {data}=await db.rpc('is_admin');ok=data===true;if(!ok)await db.auth.signOut();}}catch{}
@@ -15,7 +16,7 @@ export async function mutate(form:FormData) {
  const payload=Object.fromEntries(form.entries());
  const {error:failure}=await db.rpc(kind,{payload:{...payload,confirmed:form.has('confirmed'),accepting:form.has('accepting'),published:form.has('published')}});error=!!failure;
  }catch{error=true;}
- revalidatePath('/');revalidatePath('/admin');redirect(error?'/admin?error=save':'/admin?success=1');
+ revalidatePath('/');revalidatePath('/admin');const destination=new URL(rosterReturnPath(form.get('returnTo')),'https://admin.invalid');destination.searchParams.set(error?'error':'success',error?'save':'1');redirect(destination.pathname+destination.search+destination.hash);
 }
 
 export async function importApplications(input:unknown):Promise<{error?:string;inserted?:number;skipped?:number}>{

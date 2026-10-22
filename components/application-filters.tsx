@@ -1,0 +1,6 @@
+import {formatDate,type Session} from '@/lib/domain';
+import {rosterChoices,type RosterFilters} from '@/lib/admin-application-filters';
+const labels={status:'참여·참석 상태',payment:'입금 상태',refund:'환불 상태',notice:'연락 상태',sort:'정렬 기준'};
+export default function ApplicationFilters({sessions,filters}:{sessions:Session[];filters:RosterFilters}){
+ return <form method="get" action="/admin#roster" className="roster-filters"><p>조건을 여러 개 선택하면 모든 조건에 맞는 신청자만 표시합니다.</p><div className="roster-filter-grid"><label htmlFor="filter-session">현재 참여 회차<select id="filter-session" name="session" defaultValue={filters.session}><option value="">전체 회차</option>{[...sessions].sort((a,b)=>a.date.localeCompare(b.date)).map(s=><option key={s.id} value={s.id}>{s.date.slice(0,4)}년 {formatDate(s.date)}{s.completed?' · 운영 종료':s.cancelled?' · 운영 취소':''}</option>)}</select></label>{(Object.keys(labels)as(keyof typeof labels)[]).map(key=><label key={key} htmlFor={`filter-${key}`}>{labels[key]}<select id={`filter-${key}`} name={key} defaultValue={filters[key]}>{rosterChoices[key].map(([value,label])=><option key={value} value={value}>{label}</option>)}</select></label>)}</div><div className="roster-filter-actions"><button className="button" type="submit">조건 적용·조회</button><a className="small-button" href="/admin#roster">필터 초기화</a></div></form>;
+}

@@ -292,3 +292,18 @@ footer small, .project-background, .footer-heading>span { color: #d3ddcf; }
 .row-extra-grid .login { margin-top: 10px; }
 .row-extra-grid select { min-width: 0; font-size: 12px; }
 .row-extra-grid .small-button { font-size: 12px; padding: 6px; width: 100%; }
+.roster-filters { padding: 22px; margin: 20px 0; border: 1px solid #d5c7aa; border-radius: 12px; background: #f8f6ee; }
+.roster-filters>p { margin: 0 0 18px; font-size: 14px; color: var(--muted); }
+.roster-filter-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px; }
+.roster-filter-grid label { min-width: 0; }
+.roster-filter-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: 22px; }
+.roster-filter-actions .button { padding: 10px 20px; min-height: 44px; }
+.roster-filter-actions a { display: inline-flex; align-items: center; text-decoration: none; }
+#roster:focus { outline: none; }
+@media(max-width:900px) { .roster-filter-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media(max-width:500px) { .roster-filters { padding: 18px; }.roster-filter-grid { grid-template-columns: 1fr; gap: 14px; } }
+/* Put the historical record before the application anchor to keep booking direct. */
+.past-history-section { padding-top: 24px; padding-bottom: 0; }
+.past-history-section .completed-sessions { margin: 0; padding: 24px 0; border-bottom: 0; }
+.application-section { padding-top: 32px; }
+.application-section .upcoming-sessions-heading { margin-top: 0; }
