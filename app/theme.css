@@ -315,3 +315,14 @@ footer small, .project-background, .footer-heading>span { color: #d3ddcf; }
 .archive-source dl { margin: 10px 0 0; padding: 10px; background: #f3f4ef; }
 .archive-source dt { font-weight: 600; color: var(--muted); }
 .archive-source dd { margin: 2px 0 10px; white-space: pre-wrap; overflow-wrap: anywhere; }
+
+/* Keep collapsed history separate from the expanded upcoming controls. */
+.session-control-groups { display: grid; gap: 20px; align-content: start; }
+.session-group-heading { margin: 0 0 10px; font-size: 14px; color: var(--muted); }
+.session-control-group .admin-sessions { align-items: start; }
+.session-control.is-completed { background: #f0f2f1; border-color: #d3d9d6; color: #626c67; }
+.session-control.is-completed:not([open]) { padding: 18px 24px; }
+.session-control.is-completed>summary { color: #626c67; }
+.session-control.is-completed p, .session-control.is-completed label { color: #626c67; }
+.session-control.is-completed input:not([type=checkbox]) { background: #fafbfa; color: #626c67; border-color: #d3d9d6; }
+.session-control.is-completed .small-button { color: #626c67; border-color: #bcc5c0; }
