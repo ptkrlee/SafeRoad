@@ -75,8 +75,16 @@ nav a:hover { color: var(--green); text-decoration: underline; text-decoration-c
 .session { border-color: #d8d3c4; background: #fffefa; }
 .session.selected { background: var(--forest); border-color: var(--gold); color: var(--ivory); box-shadow: 0 8px 24px #102b2412; }
 .session.selected small { color: #dce4d7; }
-.status.open { background: #e2ebdd; color: #23523c; }
-.session.selected .status.open { background: var(--sunlight); color: var(--forest); }
+.session .status.open {
+  background: #fff0e8;
+  color: #b73519;
+  border: 1px solid #e9a78e;
+  padding: 5px 14px;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+.session.selected .status.open { background: #fff0e8; color: #b73519; border-color: #e9a78e; }
 .application-form { background: white; border-color: #d1c6af; border-top: 3px solid var(--gold); box-shadow: 0 12px 36px #102b2406; }
 input:not([type=checkbox]), textarea, select { border-color: #c8cfc3; }
 .fee-box, .policy { background: var(--ivory); }
