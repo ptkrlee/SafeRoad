@@ -671,3 +671,58 @@ footer { background: radial-gradient(ellipse at 0 100%, #36513d80, transparent 6
 .roster-id { margin-top: 10px; padding-left: 12px; }
 .roster-id>summary { font-size: 10px; color: #75806e; }
 .roster-id>small { max-width: 130px; font-size: 10px; color: #7c8677; overflow-wrap: anywhere; }
+
+/* Compact roster: keep all desktop columns; unfold details individually on phones. */
+.admin .application-roster-table th { padding: 10px 8px; }
+.application-roster-table td { padding: 8px; }
+.application-roster-table .roster-mobile-summary { display: none; }
+.application-roster-table .roster-person-name,
+.application-roster-table .roster-registration,
+.application-roster-table .roster-consents,
+.application-roster-table .roster-phone,
+.application-roster-table .roster-address { margin-bottom: 3px; min-height: 0; }
+.application-roster-table .roster-person-name strong { font-size: 15px; }
+.application-roster-table .roster-round-current { margin-bottom: 4px; }
+.application-roster-table .roster-id { margin-top: 4px; }
+.application-roster-table .row-status-grid { gap: 4px; }
+.application-roster-table .row-status { min-height: 42px; padding: 4px 7px; border-radius: 6px; }
+.application-roster-table .row-status small { font-size: 10px; margin-bottom: 0; }
+.application-roster-table .row-action-grid,
+.application-roster-table .row-extra-grid { gap: 4px; }
+.application-roster-table .row-action-grid .small-button { min-height: 32px; padding: 4px; }
+.application-roster-table .row-extra-grid { margin-top: 4px; }
+.application-roster-table .row-extra-grid summary,
+.application-roster-table .row-detail-disabled { min-height: 24px; padding: 2px 4px; }
+.application-roster-table .application-details-editor { margin-top: 4px; }
+.application-roster-table .application-details-editor>summary { padding: 4px 8px; }
+
+@media(max-width:700px) {
+  .admin .roster-table-wrap { overflow: visible; }
+  .application-roster-table,
+  .application-roster-table tbody { display: block; width: 100%; min-width: 0; }
+  .application-roster-table thead { display: none; }
+  .application-roster-table .roster-row { position: relative; display: grid; grid-template-columns: 34px minmax(0,1fr); padding: 8px 8px 8px 4px; border-bottom: 1px solid #d8d3c3; }
+  .application-roster-table .roster-row:last-child { border-bottom: 0; }
+  .application-roster-table .roster-row>td { display: none; min-width: 0; border: 0; padding: 0; text-align: left; }
+  .application-roster-table .roster-row>td:first-child { display: block; grid-column: 1; grid-row: 1; }
+  .application-roster-table .application-select-control { width: 32px; min-height: 44px; }
+  .application-roster-table .roster-row>.roster-mobile-summary { display: block; position: relative; grid-column: 2; grid-row: 1; }
+  .roster-mobile-heading { display: flex; align-items: baseline; gap: 8px; padding-right: 56px; line-height: 22px; }
+  .application-roster-table .roster-mobile-heading strong { display: inline; font-size: 14px; color: #173d2a; overflow-wrap: anywhere; }
+  .roster-mobile-heading>span { flex-shrink: 0; font-size: 12px; color: #52634f; }
+  .roster-expand { position: absolute; top: 0; right: 0; min-height: 44px; padding: 0 5px; border: 0; background: transparent; color: #31573d; font-size: 12px; font-weight: 700; }
+  .roster-mobile-meta { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 10px; min-height: 22px; padding-right: 48px; font-size: 12px; line-height: 20px; }
+  .roster-mobile-meta .phone-text { font-weight: 600; }
+  .roster-mobile-meta>span:last-child { color: #61705b; font-size: 11px; }
+  .roster-mobile-statuses { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 4px; margin-top: 4px; }
+  .roster-mobile-statuses>span { display: flex; align-items: center; justify-content: center; min-height: 23px; padding: 2px 1px; border: 1px solid; border-radius: 4px; text-align: center; font-size: 11px; line-height: 16px; }
+  .application-roster-table .roster-row.is-expanded>td:not(:first-child):not(.roster-mobile-summary) { display: block; grid-column: 1 / -1; margin: 8px 4px 0; padding-top: 8px; border-top: 1px solid #dedbce; }
+  .roster-row.is-expanded>td[data-label]::before { content: attr(data-label); display: block; margin-bottom: 5px; color: #6c775e; font-size: 11px; font-weight: 700; }
+  .application-roster-table .row-status-grid,
+  .application-roster-table .row-actions,
+  .application-roster-table .application-details-editor { width: 100%; }
+  .application-roster-table .row-action-grid .small-button { min-height: 44px; }
+  .application-roster-table .row-extra-grid summary,
+  .application-roster-table .application-details-editor>summary { min-height: 44px; padding: 10px 8px; }
+  .application-roster-table .roster-person .roster-consents { flex-wrap: wrap; white-space: normal; }
+}
