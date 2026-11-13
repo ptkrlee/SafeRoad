@@ -726,3 +726,30 @@ footer { background: radial-gradient(ellipse at 0 100%, #36513d80, transparent 6
   .application-roster-table .application-details-editor>summary { min-height: 44px; padding: 10px 8px; }
   .application-roster-table .roster-person .roster-consents { flex-wrap: wrap; white-space: normal; }
 }
+
+/* Staff-only contact notes stay compact until opened. */
+.application-notes { margin-top: 5px; max-width: 320px; }
+.application-notes>summary { font-size: 11px; color: #61705b; padding: 3px 0; }
+.application-notes.has-notes>summary { color: #795719; font-weight: 700; }
+.application-note-preview { display: block; max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; font-weight: 400; }
+.application-notes[open] { padding: 9px; border: 1px solid #d4c7a3; border-radius: 8px; background: #fffdf6; }
+.application-notes[open] .application-note-preview { display: none; }
+.application-notes label { font-size: 12px; }
+.application-notes textarea { width: 100%; min-height: 82px; padding: 7px; font-size: 13px; resize: vertical; }
+.application-note-help { font-size: 11px; color: #65705d; margin: 7px 0; }
+.application-note-shortcuts { display: flex; flex-wrap: wrap; gap: 4px; margin: 6px 0; }
+.application-note-shortcuts button { padding: 4px 6px; border: 1px solid #d4c7a3; border-radius: 5px; font-size: 11px; background: #f7f2e6; color: #586548; }
+.application-note-save { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.application-note-list { list-style: none; margin: 10px 0 0; padding: 0; }
+.application-note-list li { padding: 8px 0; border-top: 1px solid #e0dacb; }
+.application-note-list time { font-size: 10px; color: #747d6a; }
+.application-note-list p { margin: 3px 0 0; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.application-note-message { font-size: 12px; margin: 7px 0 0; }
+.roster-note-indicator { border-radius: 4px; padding: 0 4px; background: #fff2d9; color: #795719 !important; font-size: 10px !important; }
+@media(max-width:700px) {
+ .application-notes { max-width: none; }
+ .application-notes>summary { min-height: 44px; padding: 10px 0; }
+ .application-note-shortcuts button { min-height: 36px; }
+ .application-note-save .small-button { min-height: 44px; }
+ .roster-mobile-heading { flex-wrap: wrap; gap: 0 6px; }
+}

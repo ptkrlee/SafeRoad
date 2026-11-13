@@ -74,3 +74,21 @@ export async function editApplication(input:unknown):Promise<{error?:string;ok?:
  revalidatePath('/');revalidatePath('/admin');return{ok:true,amountReview:data.amountReview};
  }catch{return{error:'저장 결과를 확인하지 못했습니다. 최신 명단을 조회한 뒤 다시 확인해주세요.'};}
 }
+
+export async function addApplicationNote(input:unknown):Promise<{note?:import('@/lib/application-notes').ApplicationNote;error?:string}>{
+ const {applicationNoteSchema}=await import('@/lib/application-notes');const parsed=applicationNoteSchema.safeParse(input);
+ if(!parsed.success)return {error:'메모는 공백을 제외하고 1~1,000자로 입력해주세요.'};
+ try{const db=await database();const {data:{user}}=await db.auth.getUser();if(!user)return {error:'관리자 로그인이 필요합니다.'};const {data:admin}=await db.rpc('is_admin');if(admin!==true)return {error:'관리자 권한이 필요합니다.'};
+ const {data,error}=await db.rpc('add_application_note',{target:parsed.data.applicationId,note:parsed.data.body,request_key:parsed.data.requestId});
+ if(error)return {error:'저장 여부를 확인하지 못했습니다. 다시 저장하면 같은 메모는 중복 등록하지 않습니다. 연결 및 관리자 메모 DB 설치를 확인해주세요.'};
+ revalidatePath('/admin');return {note:data};
+ }catch{return {error:'저장 결과를 확인하지 못했습니다. 입력한 메모는 남아 있습니다. 잠시 후 다시 저장해주세요.'};}
+}
+export async function olderApplicationNotes(input:unknown):Promise<{notes?:import('@/lib/application-notes').ApplicationNote[];error?:string}>{
+ const {z}=await import('zod');const parsed=z.object({applicationId:z.string().uuid(),before:z.number().int().positive().safe()}).safeParse(input);
+ if(!parsed.success)return {error:'신청 정보와 메모를 다시 확인해주세요.'};
+ try{const db=await database();const {data:{user}}=await db.auth.getUser();if(!user)return {error:'관리자 로그인이 필요합니다.'};const {data:admin}=await db.rpc('is_admin');if(admin!==true)return {error:'관리자 권한이 필요합니다.'};
+ const {data,error}=await db.from('application_notes').select('id,body,created_at').eq('application_id',parsed.data.applicationId).lt('id',parsed.data.before).order('id',{ascending:false}).limit(20);
+ return error?{error:'이전 메모를 불러오지 못했습니다. 다시 시도해주세요.'}:{notes:data||[]};
+ }catch{return {error:'이전 메모를 불러오지 못했습니다. 다시 시도해주세요.'};}
+}
